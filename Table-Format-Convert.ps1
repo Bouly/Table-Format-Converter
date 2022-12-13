@@ -1,173 +1,163 @@
 ##############################################################################################################################
 #                                                       Chargement des classe                                                #
 ##############################################################################################################################
-
-# Chargement des classe 
+# Chargement des classe l'interface GUI
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
-
 ##############################################################################################################################
 #                                                              Function                                                      #
 ##############################################################################################################################
-
-function convert {$ConvertTo}
-
+#Funtion
 ##############################################################################################################################
 #                                                          Window Settings                                                   #
 ##############################################################################################################################
-
 # Création de la fenêtre pour contenir les éléments
-$main_form = New-Object System.Windows.Forms.Form
-
+$main_form                  = New-Object System.Windows.Forms.Form
 # Le titre de la fenêtre
-$main_form.Text ='Table Format Converter'
-
+$main_form.Text             ='Table Format Converter'
 # Largeur de la fenêtre
-$main_form.Width = 400
-
+$main_form.Width            = 400
 # Hauteur de la fenêtre
-$main_form.Height = 400
-
+$main_form.Height           = 400
 # Étire automatiquement la fenêtre
-$main_form.AutoSize = $true
-
+$main_form.AutoSize         = $true
 # Couleur du fond
-$main_form.BackColor = "gray"
-
+$main_form.BackColor        = "gray"
 # Icon du GUI
-$main_form.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon('C:\Users\cp-20ahb\Desktop\refresh.ico')
-
-
+$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon('C:\Users\cp-20ahb\Desktop\refresh.ico')
 # Bloque la taille max et min
-$main_form.minimumSize = New-Object System.Drawing.Size(565,365)
-$main_form.maximumSize = New-Object System.Drawing.Size(565,365)
-
+$main_form.minimumSize      = New-Object System.Drawing.Size(565,365)
+$main_form.maximumSize      = New-Object System.Drawing.Size(565,365)
 ##############################################################################################
 #                                              Toolbox                                       #
 ##############################################################################################
-
 ###############################################################
 #                            Label                            #
 ###############################################################
-
-#Label format d'entrée
-
-$LabelFormatInput          = New-Object System.Windows.Forms.Label
-$LabelFormatInput.Location = New-Object System.Drawing.Size(10,20)
-$LabelFormatInput.Size     = New-Object System.Drawing.Size(100,20)
-$LabelFormatInput.Text     = "Format de base"
-
-#Label format de sorti
-
-
-$LabelFormatOutput        = New-Object System.Windows.Forms.Label
+##########################
+#   Label Input format   #
+##########################
+#Création du label pour le format d'entrée
+$LabelFormatInput           = New-Object System.Windows.Forms.Label
+#Location du label
+$LabelFormatInput.Location  = New-Object System.Drawing.Size(10,20)
+#Taille du label
+$LabelFormatInput.Size      = New-Object System.Drawing.Size(100,20)
+#Text du Label
+$LabelFormatInput.Text      = "Format d'entrée"
+##########################
+#   Label Output format  #
+##########################
+#Création du label pour le format de sortie
+$LabelFormatOutput          = New-Object System.Windows.Forms.Label
+#Location du label
 $LabelFormatOutput.Location = New-Object System.Drawing.Size(200,20)
+#Taille du label
 $LabelFormatOutput.Size     = New-Object System.Drawing.Size(100,20)
-$LabelFormatOutput.Text     = "Format de sorti"
-
-# Notif
-
-$LabelInfo        = New-Object System.Windows.Forms.Label
-$LabelInfo.Location = New-Object System.Drawing.Size(355,80)
-$LabelInfo.Size     = New-Object System.Drawing.Size(200,20)
-$LabelInfo.Text     = "Chemin d'entrée non spécifié"
-$LabelInfo.ForeColor = "Red"
-
-$LabelInfo2        = New-Object System.Windows.Forms.Label
-$LabelInfo2.Location = New-Object System.Drawing.Size(355, 180)
-$LabelInfo2.Size     = New-Object System.Drawing.Size(200,20)
-$LabelInfo2.Text     = "Chemin de sorti non spécifié"
-$LabelInfo2.ForeColor = "Red"
-
+#Text du label
+$LabelFormatOutput.Text     = "Format de sortie"
+##########################
+#    Label Info Input    #
+##########################
+#Création du label pour informé l'état du chemin d'entrée
+$LabelInfo                  = New-Object System.Windows.Forms.Label
+#Location du label
+$LabelInfo.Location         = New-Object System.Drawing.Size(355,80)
+#Taille du label
+$LabelInfo.Size             = New-Object System.Drawing.Size(200,20)
+#Text du label
+$LabelInfo.Text             = "Chemin d'entrée non spécifié"
+#Couleur du text
+$LabelInfo.ForeColor        = "Red"
+##########################
+#    Label Info Output   #
+##########################
+#Création du label pour informé l'état du chemin de sortie
+$LabelInfo2                 = New-Object System.Windows.Forms.Label
+#Location du label
+$LabelInfo2.Location        = New-Object System.Drawing.Size(355, 180)
+#Taille du label
+$LabelInfo2.Size            = New-Object System.Drawing.Size(200,20)
+#Text du label
+$LabelInfo2.Text            = "Chemin de sorti non spécifié"
+#Couleur du text
+$LabelInfo2.ForeColor       = "Red"
 ###############################################################
 #                            Button                           #
 ###############################################################
+##########################
+#    Button Input Loc    #
+##########################
+#Création du button pour le chemin de sorti
+$ButtonLocation             = New-Object System.Windows.Forms.Button
+#Location du button
+$ButtonLocation.Location    = New-Object System.Drawing.Size(355,100)
+#Taille du button
+$ButtonLocation.Size        = New-Object System.Drawing.Size(75,23)
+#Text du button
+$ButtonLocation.Text        = "Location"
 
-$ButtonLocation = New-Object System.Windows.Forms.Button
-
-$ButtonLocation.Location = New-Object System.Drawing.Size(355,100)
-
-$ButtonLocation.Size = New-Object System.Drawing.Size(75,23)
-
-$ButtonLocation.Text = "Location"
-
-#$ButtonLocation.ForeColor = [System.Drawing.Color]::FromArgb(243,5,81) 
-
-#$ButtonLocation.BackColor = "White"
-
-#$ButtonLocation.Font = 'Bahnschrift,11'
-
-
-$FilePath = New-Object System.Windows.Forms.OpenFileDialog
+#Création du dialogue pour la séléction du chemin
+$FilePath                   = New-Object System.Windows.Forms.OpenFileDialog
 
 # Event click
-$ButtonLocation.Add_Click({
-    $FilePath.ShowDialog()
-    if ($FilePath.FileName -eq $FilePath.FileName) {
-        $LabelInfo.Text = $FilePath.FileName                #Comprend pas (fait au hasard)
-        $LabelInfo.ForeColor = "green"
+$ButtonLocation.Add_Click #Quand le button cliqué
+({
+    $FilePath.ShowDialog() # Affiche la page de dialogue pour la séléction du chemin
+    if ($FilePath.FileName -eq $FilePath.FileName) # Si le chemin = le chemin alors
+    {
+        $LabelInfo.Text = $FilePath.FileName # Le label d'information de l'état du chemin = Le chemin choisi
+        $LabelInfo.ForeColor = "green" # Couleur du text du label d'information de l'état du chemin en "vert"
     }   
-    })
-
-
-
-#################################################################
-
-
-$ButtonLocation2 = New-Object System.Windows.Forms.Button
-
-$ButtonLocation2.Location = New-Object System.Drawing.Size(355,200)
-
-$ButtonLocation2.Size = New-Object System.Drawing.Size(75,23)
-
-$ButtonLocation2.Text = "Location"
-
-#$ButtonLocation2.ForeColor = [System.Drawing.Color]::FromArgb(243,5,81) 
-
-#$ButtonLocation2.BackColor = "White"
-
-#$ButtonLocation2.Font = 'Bahnschrift,11'
-
-
+})
+##########################
+#   Button Output Loc    #
+##########################
+#Création du button pour le chemin de sorti
+$ButtonLocation2            = New-Object System.Windows.Forms.Button
+#Location du button
+$ButtonLocation2.Location   = New-Object System.Drawing.Size(355,200)
+#Taille du button
+$ButtonLocation2.Size       = New-Object System.Drawing.Size(75,23)
+#Text du button
+$ButtonLocation2.Text       = "Location"
+#Création du dialogue pour la séléction du chemin
 $FolderPath = New-Object System.Windows.Forms.FolderBrowserDialog
-
 # Event click
-$ButtonLocation2.Add_Click({
-    $FolderPath.ShowDialog()
-    if ($FolderPath.SelectedPath -eq $FolderPath.SelectedPath) {
-        $LabelInfo2.Text = $FolderPath.SelectedPath                #Comprend pas (fait au hasard)
-        $LabelInfo2.ForeColor = "green"
+$ButtonLocation2.Add_Click
+({
+    $FolderPath.ShowDialog() # Affiche la page de dialogue pour la séléction du chemin
+    if ($FolderPath.SelectedPath -eq $FolderPath.SelectedPath) # Si le chemin = le chemin alors
+    {
+        $LabelInfo2.Text = $FolderPath.SelectedPath # Le label d'information de l'état du chemin = Le chemin choisi
+        $LabelInfo2.ForeColor = "green" # Couleur du text du label d'information de l'état du chemin en "vert"
     }   
     })
-
-
-
-##################################################################
-
-
-
+##########################
+#    Button Conversion   #
+##########################
+#Création du button pour convertir
 $OKButton              = New-Object System.Windows.Forms.Button
+#Location du button
 $OKButton.Location     = New-Object System.Drawing.Size(128,100)
+#Taille du button
 $OKButton.Size         = New-Object System.Drawing.Size(75,23)
+#Text du button
 $OKButton.Text         = "Convertir"
+# Event click
 $OKButton.Add_Click({ 
-
-
 #Output
-
-$SelectedOutput = $ComboboxTypeOutput.SelectedItem
+$SelectedOutput = $ComboboxTypeOutput.SelectedItem 
 $script:x += $ComboboxTypeOutput.SelectedItem
 if (![string]::IsNullOrWhiteSpace($SelectedOutput)) {
             switch ($SelectedOutput) {
-                "csv" { $ConvertTo = 'ConvertTo-CSV' }
-                "json" { $ConvertTo = "ConvertTo-Json" }
-                "xml" { $ConvertTo = "ConvertTo-Xml" }
-                "xls" { $ConvertTo = "" }
+                "csv" {}
+                "json" {}
+                "xml" {}
+                "xls" {}
             }
             $ComboboxTypeOutput.SelectedIndex = -1   # reset the combobox to blank
         }
-
-
 #Input
 $SelectedInput = $ComboboxTypeInput.SelectedItem
 $script:x += $ComboboxTypeInput.SelectedItem
@@ -183,7 +173,7 @@ $script:x += $ComboboxTypeInput.SelectedItem
             }
             elseif ($SelectedOutput -eq "xml" -And $SelectedInput -eq "csv") 
             {
-                import-csv -Delimiter ";" "C:\ConverterBaseFormat\base.csv" | Export-Clixml "C:\ConverterOutPutFormat\outputcsv.xml" 
+                import-csv -Delimiter ";" $FilePath.FileName | Export-Clixml "$Destionation\outputcsv.xml" 
             }
             elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "csv")
             {
@@ -193,11 +183,11 @@ $script:x += $ComboboxTypeInput.SelectedItem
 
             elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "json") 
             {
-                Get-Content "C:\ConverterBaseFormat\base.json" | ConvertFrom-Json | ConvertTo-Csv -Delimiter ";" | Out-File "C:\ConverterOutPutFormat\outputjson.csv" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter ";" | Out-File "$Destionation\outputjson.csv" 
             }
             elseif ($SelectedOutput -eq "xml" -And $SelectedInput -eq "json") 
             {
-                Get-Content "C:\ConverterBaseFormat\base.json" | ConvertFrom-Json | Export-Clixml "C:\ConverterOutPutFormat\outputjson.xml" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml "$Destionation\outputjson.xml" 
             }
             elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "json") 
             {
@@ -207,11 +197,11 @@ $script:x += $ComboboxTypeInput.SelectedItem
 
             elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "xml") 
             {
-                Import-Clixml "C:\ConverterBaseFormat\base.xml" | ConvertTo-Csv -Delimiter ";" | Add-Content -Path "C:\ConverterOutPutFormat\outputxml.csv" 
+                Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter ";" | Add-Content -Path "$Destionation\outputxml.csv" 
             }
             elseif ($SelectedOutput -eq "json" -And $SelectedInput -eq "xml")
             {
-                Import-Clixml "C:\ConverterBaseFormat\base.xml" | ConvertTo-Json | Out-File "C:\ConverterOutPutFormat\outputxml.json" 
+                Import-Clixml $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\outputxml.json" 
             }
             elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "xml")
             {
