@@ -50,31 +50,96 @@ $main_form.maximumSize = New-Object System.Drawing.Size(565,365)
 #                            Label                            #
 ###############################################################
 
+#Label format d'entrée
+
+$LabelFormatInput          = New-Object System.Windows.Forms.Label
+$LabelFormatInput.Location = New-Object System.Drawing.Size(10,20)
+$LabelFormatInput.Size     = New-Object System.Drawing.Size(100,20)
+$LabelFormatInput.Text     = "Format de base"
+
+#Label format de sorti
+
+
+$LabelFormatOutput        = New-Object System.Windows.Forms.Label
+$LabelFormatOutput.Location = New-Object System.Drawing.Size(200,20)
+$LabelFormatOutput.Size     = New-Object System.Drawing.Size(100,20)
+$LabelFormatOutput.Text     = "Format de sorti"
+
+# Notif
+
+$LabelInfo        = New-Object System.Windows.Forms.Label
+$LabelInfo.Location = New-Object System.Drawing.Size(355,80)
+$LabelInfo.Size     = New-Object System.Drawing.Size(200,20)
+$LabelInfo.Text     = "Chemin d'entrée non spécifié"
+$LabelInfo.ForeColor = "Red"
+
+$LabelInfo2        = New-Object System.Windows.Forms.Label
+$LabelInfo2.Location = New-Object System.Drawing.Size(355, 180)
+$LabelInfo2.Size     = New-Object System.Drawing.Size(200,20)
+$LabelInfo2.Text     = "Chemin de sorti non spécifié"
+$LabelInfo2.ForeColor = "Red"
+
 ###############################################################
 #                            Button                           #
 ###############################################################
 
 $ButtonLocation = New-Object System.Windows.Forms.Button
 
-$ButtonLocation.Location = New-Object System.Drawing.Size(215,100)
+$ButtonLocation.Location = New-Object System.Drawing.Size(355,100)
 
-$ButtonLocation.Size = New-Object System.Drawing.Size(120,40)
+$ButtonLocation.Size = New-Object System.Drawing.Size(75,23)
 
 $ButtonLocation.Text = "Location"
 
-$ButtonLocation.ForeColor = [System.Drawing.Color]::FromArgb(243,5,81) 
+#$ButtonLocation.ForeColor = [System.Drawing.Color]::FromArgb(243,5,81) 
 
-$ButtonLocation.BackColor = "White"
+#$ButtonLocation.BackColor = "White"
 
-$ButtonLocation.Font = 'Bahnschrift,11'
+#$ButtonLocation.Font = 'Bahnschrift,11'
 
 
-$FolderBrowser = New-Object System.Windows.Forms.FolderBrowserDialog
+$FilePath = New-Object System.Windows.Forms.OpenFileDialog
 
 # Event click
 $ButtonLocation.Add_Click({
-    $FolderBrowser.ShowDialog()
+    $FilePath.ShowDialog()
+    if ($FilePath.FileName -eq $FilePath.FileName) {
+        $LabelInfo.Text = $FilePath.FileName                #Comprend pas (fait au hasard)
+        $LabelInfo.ForeColor = "green"
+    }   
     })
+
+
+
+#################################################################
+
+
+$ButtonLocation2 = New-Object System.Windows.Forms.Button
+
+$ButtonLocation2.Location = New-Object System.Drawing.Size(355,200)
+
+$ButtonLocation2.Size = New-Object System.Drawing.Size(75,23)
+
+$ButtonLocation2.Text = "Location"
+
+#$ButtonLocation2.ForeColor = [System.Drawing.Color]::FromArgb(243,5,81) 
+
+#$ButtonLocation2.BackColor = "White"
+
+#$ButtonLocation2.Font = 'Bahnschrift,11'
+
+
+$FolderPath = New-Object System.Windows.Forms.FolderBrowserDialog
+
+# Event click
+$ButtonLocation2.Add_Click({
+    $FolderPath.ShowDialog()
+    if ($FolderPath.SelectedPath -eq $FolderPath.SelectedPath) {
+        $LabelInfo2.Text = $FolderPath.SelectedPath                #Comprend pas (fait au hasard)
+        $LabelInfo2.ForeColor = "green"
+    }   
+    })
+
 
 
 ##################################################################
@@ -107,109 +172,79 @@ if (![string]::IsNullOrWhiteSpace($SelectedOutput)) {
 $SelectedInput = $ComboboxTypeInput.SelectedItem
 $script:x += $ComboboxTypeInput.SelectedItem
             #CSV
+    if($FilePath.FileName -like "*csv*" -or $FilePath.FileName -like "*json*" -or $FilePath.FileName -like "*xml*")
+    
+        {
+
+            $Destionation = $FolderPath.SelectedPath
             if ($SelectedOutput -eq "json" -And $SelectedInput -eq "csv") 
             {
-                import-csv -Delimiter ";" "C:\ConverterBaseFormat\base.csv" | ConvertTo-Json | Add-Content -Path "C:\ConverterOutPutFormat\outputcsv.json"
-                $LabelInfo.Text = "Reussi"
+                import-csv -Delimiter ";" $FilePath.FileName | ConvertTo-Json | Add-Content -Path "$Destionation\outputcsv.json"
             }
             elseif ($SelectedOutput -eq "xml" -And $SelectedInput -eq "csv") 
             {
                 import-csv -Delimiter ";" "C:\ConverterBaseFormat\base.csv" | Export-Clixml "C:\ConverterOutPutFormat\outputcsv.xml" 
-                $LabelInfo.Text = "Reussi"
             }
-            elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "csv") 
+            elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "csv")
             {
-                $LabelInfo.Text = "Pas fini"
             }
 
             #json
 
-            if ($SelectedOutput -eq "csv" -And $SelectedInput -eq "json") 
+            elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "json") 
             {
                 Get-Content "C:\ConverterBaseFormat\base.json" | ConvertFrom-Json | ConvertTo-Csv -Delimiter ";" | Out-File "C:\ConverterOutPutFormat\outputjson.csv" 
-                $LabelInfo.Text = "Reussi"
             }
             elseif ($SelectedOutput -eq "xml" -And $SelectedInput -eq "json") 
             {
                 Get-Content "C:\ConverterBaseFormat\base.json" | ConvertFrom-Json | Export-Clixml "C:\ConverterOutPutFormat\outputjson.xml" 
-                $LabelInfo.Text = "Reussi"
             }
             elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "json") 
             {
-                $LabelInfo.Text = "Pas fini"
             }
 
             #xml
 
-            if ($SelectedOutput -eq "csv" -And $SelectedInput -eq "xml") 
+            elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "xml") 
             {
                 Import-Clixml "C:\ConverterBaseFormat\base.xml" | ConvertTo-Csv -Delimiter ";" | Add-Content -Path "C:\ConverterOutPutFormat\outputxml.csv" 
-                $LabelInfo.Text = "Reussi"
             }
             elseif ($SelectedOutput -eq "json" -And $SelectedInput -eq "xml")
             {
                 Import-Clixml "C:\ConverterBaseFormat\base.xml" | ConvertTo-Json | Out-File "C:\ConverterOutPutFormat\outputxml.json" 
-                $LabelInfo.Text = "Reussi"
             }
             elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "xml")
             {
-                $LabelInfo.Text = "Pas fini"
             }
-
-            #xls
-
-
-
-
-
-
-
-
-
-
-
 
 
             #Input = Output Error
-            elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "csv") {
+            elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "csv") 
+            {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
             }  
-            elseif ($SelectedOutput -eq "json" -And $SelectedInput -eq "json") {
+            elseif ($SelectedOutput -eq "json" -And $SelectedInput -eq "json") 
+            {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
             }
-            elseif ($SelectedOutput -eq "xml" -And $SelectedInput -eq "xml") {
+            elseif ($SelectedOutput -eq "xml" -And $SelectedInput -eq "xml") 
+            {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
             }  
-            elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "xls") {
+            elseif ($SelectedOutput -eq "xls" -And $SelectedInput -eq "xls") 
+            {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
-            }  
+            } 
+        }
+    else 
+    {
+        $LabelInfo.Text = "Chemin non défini ou invalide"
+        $LabelInfo.ForeColor = "red"
+        [System.Windows.Forms.MessageBox]::Show('Chemin Input non défini ou invalide','Erreur','Ok','Error')
+    } 
 })
 
-###############################################################
-#                            Label                            #
-###############################################################
 
-#Label format d'entrée
-
-$LabelFormatInput          = New-Object System.Windows.Forms.Label
-$LabelFormatInput.Location = New-Object System.Drawing.Size(10,20)
-$LabelFormatInput.Size     = New-Object System.Drawing.Size(100,20)
-$LabelFormatInput.Text     = "Format de base"
-
-#Label format de sorti
-
-
-$LabelFormatOutput        = New-Object System.Windows.Forms.Label
-$LabelFormatOutput.Location = New-Object System.Drawing.Size(200,20)
-$LabelFormatOutput.Size     = New-Object System.Drawing.Size(100,20)
-$LabelFormatOutput.Text     = "Format de sorti"
-
-# Notif
-
-$LabelInfo        = New-Object System.Windows.Forms.Label
-$LabelInfo.Location = New-Object System.Drawing.Size(260,90)
-$LabelInfo.Size     = New-Object System.Drawing.Size(280,20)
-$LabelInfo.Text     = "Notif"
 
 
 
@@ -258,9 +293,11 @@ $main_form.controls.AddRange(@(
 $LabelFormatInput
 $LabelFormatOutput
 $LabelInfo
+$LabelInfo2
 
 $OKButton
 $ButtonLocation
+$ButtonLocation2
 
 $ComboboxTypeInput
 $ComboboxTypeOutput
