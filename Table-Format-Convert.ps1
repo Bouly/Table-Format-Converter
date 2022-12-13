@@ -147,21 +147,21 @@ $OKButton.Text         = "Convertir"
 # Event click
 $OKButton.Add_Click({ 
 #Output
-$SelectedOutput = $ComboboxTypeOutput.SelectedItem 
-$script:x += $ComboboxTypeOutput.SelectedItem
-if (![string]::IsNullOrWhiteSpace($SelectedOutput)) {
-            switch ($SelectedOutput) {
+$SelectedOutput = $ComboboxTypeOutput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
+$script:x += $ComboboxTypeOutput.SelectedItem # Pas sur à chercher
+if (![string]::IsNullOrWhiteSpace($SelectedOutput)) { # Pas sur à chercher
+            switch ($SelectedOutput) { # list
                 "csv" {}
                 "json" {}
                 "xml" {}
                 "xls" {}
             }
-            $ComboboxTypeOutput.SelectedIndex = -1   # reset the combobox to blank
+            $ComboboxTypeOutput.SelectedIndex = -1   # vide la séléction du combobox
         }
 #Input
-$SelectedInput = $ComboboxTypeInput.SelectedItem
-$script:x += $ComboboxTypeInput.SelectedItem
-            #CSV
+$SelectedInput = $ComboboxTypeInput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
+$script:x += $ComboboxTypeInput.SelectedItem # Pas sur à chercher
+#CSV
     if($FilePath.FileName -like "*csv*" -or $FilePath.FileName -like "*json*" -or $FilePath.FileName -like "*xml*")
     
         {
@@ -179,7 +179,7 @@ $script:x += $ComboboxTypeInput.SelectedItem
             {
             }
 
-            #json
+#json
 
             elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "json") 
             {
@@ -193,7 +193,7 @@ $script:x += $ComboboxTypeInput.SelectedItem
             {
             }
 
-            #xml
+#xml
 
             elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "xml") 
             {
@@ -208,7 +208,7 @@ $script:x += $ComboboxTypeInput.SelectedItem
             }
 
 
-            #Input = Output Error
+#Input = Output Error
             elseif ($SelectedOutput -eq "csv" -And $SelectedInput -eq "csv") 
             {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
