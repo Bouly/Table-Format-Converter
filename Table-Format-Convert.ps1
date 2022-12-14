@@ -101,8 +101,7 @@ $ButtonLocation.Text        = "Location"
 $FilePath                   = New-Object System.Windows.Forms.OpenFileDialog
 
 # Event click
-$ButtonLocation.Add_Click #Quand le button cliqué
-({
+$ButtonLocation.Add_Click({ #Quand le button cliqué
     $FilePath.ShowDialog() # Affiche la page de dialogue pour la séléction du chemin
     if ($FilePath.FileName -eq $FilePath.FileName) # Si le chemin = le chemin alors
     {
@@ -124,15 +123,14 @@ $ButtonLocation2.Text       = "Location"
 #Création du dialogue pour la séléction du chemin
 $FolderPath = New-Object System.Windows.Forms.FolderBrowserDialog
 # Event click
-$ButtonLocation2.Add_Click
-({
+$ButtonLocation2.Add_Click({
     $FolderPath.ShowDialog() # Affiche la page de dialogue pour la séléction du chemin
     if ($FolderPath.SelectedPath -eq $FolderPath.SelectedPath) # Si le chemin = le chemin alors
     {
         $LabelInfo2.Text = $FolderPath.SelectedPath # Le label d'information de l'état du chemin = Le chemin choisi
         $LabelInfo2.ForeColor = "green" # Couleur du text du label d'information de l'état du chemin en "vert"
     }   
-    })
+})
 ##########################
 #    Button Conversion   #
 ##########################
@@ -148,19 +146,19 @@ $OKButton.Text         = "Convertir"
 $OKButton.Add_Click({ 
 #Output
 $SelectedOutput = $ComboboxTypeOutput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
-$script:x += $ComboboxTypeOutput.SelectedItem # Pas sur à chercher
-if (![string]::IsNullOrWhiteSpace($SelectedOutput)) { # Pas sur à chercher
-            switch ($SelectedOutput) { # list
-                "csv" {}
-                "json" {}
-                "xml" {}
-                "xls" {}
-            }
+$script:x += $ComboboxTypeOutput.SelectedItem # Pour qu'un seul item soit séléctionné
+#if (![string]::IsNullOrWhiteSpace($SelectedOutput)) { # Pas sur à chercher
+#            switch ($SelectedOutput) { # list
+#                "csv" {}
+#                "json" {}
+#                "xml" {}
+#                "xls" {}
+#            }
             $ComboboxTypeOutput.SelectedIndex = -1   # vide la séléction du combobox
-        }
+#        }
 #Input
 $SelectedInput = $ComboboxTypeInput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
-$script:x += $ComboboxTypeInput.SelectedItem # Pas sur à chercher
+$script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléctionné
 #CSV
     if($FilePath.FileName -like "*csv*" -or $FilePath.FileName -like "*json*" -or $FilePath.FileName -like "*xml*")
     
@@ -226,73 +224,72 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pas sur à chercher
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
             } 
         }
-    else 
+#    elseif ($FolderPath.SelectedPath = "")
+#    {
+#        $LabelInfo2.Text = "Chemin non défini ou invalide"
+#        $LabelInfo2.ForeColor = "red"
+#        [System.Windows.Forms.MessageBox]::Show('Chemin Input non défini ou invalide','Erreur','Ok','Error')
+#    }
+    #elseif ($FilePath.FileName = "")
+    else
     {
         $LabelInfo.Text = "Chemin non défini ou invalide"
         $LabelInfo.ForeColor = "red"
         [System.Windows.Forms.MessageBox]::Show('Chemin Input non défini ou invalide','Erreur','Ok','Error')
-    } 
+    }  
 })
-
-
-
-
-
 ###############################################################
 #                            Combobox                         #
 ###############################################################
-
-
-#Input#
-
+##########################
+#     Combobox Input     #
+##########################
+#Création de la combobox pour le type d'entrée
 $ComboboxTypeInput          = New-Object System.Windows.Forms.Combobox
+#Location de la combobox
 $ComboboxTypeInput.Location = New-Object System.Drawing.Size(10,40)
+#Taille de la combobox
 $ComboboxTypeInput.Size     = New-Object System.Drawing.Size(120,20)
+#Taille de l'onglet
 $ComboboxTypeInput.Height   = 70
-
-
-#[void] $ComboboxTypeInput.Items.Add("Item 1")
-$ComboboxTypeInput.Items.Add("csv")
+#Ajout des item dans la combobox
+$ComboboxTypeInput.Items.Add("csv") #[void] $ComboboxTypeInput.Items.Add("csv")
 $ComboboxTypeInput.Items.Add("json")
 $ComboboxTypeInput.Items.Add("xml")
 $ComboboxTypeInput.Items.Add("xls")
-
-
-#Output#
-
+##########################
+#     Combobox Output    #
+##########################
+#Création de la combobox pour le type de sortie
 $ComboboxTypeOutput          = New-Object System.Windows.Forms.Combobox
+#Location de la combobox
 $ComboboxTypeOutput.Location = New-Object System.Drawing.Size(200,40)
+#Taille de la combobox
 $ComboboxTypeOutput.Size     = New-Object System.Drawing.Size(120,20)
+#Taille de l'onglet
 $ComboboxTypeOutput.Height   = 70
-
-
-
+#Ajout des item dans la combobox
 $ComboboxTypeOutput.Items.Add("csv")
 $ComboboxTypeOutput.Items.Add("json")
 $ComboboxTypeOutput.Items.Add("xml")
 $ComboboxTypeOutput.Items.Add("xls")
-
 ##############################################################################################
 #                                              Control ToolBox                               #
 ##############################################################################################
-
-# Déclare les variables du ToolBox
+# Déclare les variables du ToolBox pour les afficher
 $main_form.controls.AddRange(@(
-
-
+#Label
 $LabelFormatInput
 $LabelFormatOutput
 $LabelInfo
 $LabelInfo2
-
+#Button
 $OKButton
 $ButtonLocation
 $ButtonLocation2
-
+#Combobox
 $ComboboxTypeInput
 $ComboboxTypeOutput
-
 ))
-
 # Affiche la fenêtre
 $main_form.ShowDialog()
