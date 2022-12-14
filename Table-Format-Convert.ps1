@@ -32,8 +32,32 @@ $main_form.maximumSize      = New-Object System.Drawing.Size(565,365)
 #                                              Toolbox                                       #
 ##############################################################################################
 ###############################################################
+#                            TextBox                          #
+###############################################################
+
+$TextBoxOutPutFileName      = New-Object System.windows.Forms.TextBox
+
+$TextBoxOutPutFileName.Location = New-Object System.Drawing.Size(390,40)
+
+$TextBoxOutPutFileName.Size = New-Object System.Drawing.Size(137,20)
+
+$TextBoxOutPutFileName.Text = "Output"
+
+###############################################################
 #                            Label                            #
 ###############################################################
+##########################
+#   Label Output Name    #
+##########################
+
+$LabelOutputName          = New-Object System.Windows.Forms.Label
+#Location du label
+$LabelOutputName.Location  = New-Object System.Drawing.Size(390,20)
+#Taille du label
+$LabelOutputName.Size      = New-Object System.Drawing.Size(137,20)
+#Text du Label
+$LabelOutputName.Text      = "Nom du fichier de sortie"
+
 ##########################
 #   Label Input format   #
 ##########################
@@ -56,7 +80,7 @@ $LabelFormatOutput.Location = New-Object System.Drawing.Size(200,20)
 $LabelFormatOutput.Size     = New-Object System.Drawing.Size(100,20)
 #Text du label
 $LabelFormatOutput.Text     = "Format de sortie"
-
+#Couleur du text
 $LabelFormatOutput.ForeColor        = "black"
 ##########################
 #    Label Info Input    #
@@ -71,8 +95,6 @@ $LabelInfo.Size             = New-Object System.Drawing.Size(192,20)
 $LabelInfo.Text             = "Chemin d'entrée non spécifié"
 #Couleur du text
 $LabelInfo.ForeColor        = "black"
-#Taille automatique du label
-#$LabelInfo.AutoSize         = $true
 ##########################
 #    Label Info Output   #
 ##########################
@@ -100,10 +122,8 @@ $ButtonLocation.Location    = New-Object System.Drawing.Size(10,100)
 $ButtonLocation.Size        = New-Object System.Drawing.Size(75,23)
 #Text du button
 $ButtonLocation.Text        = "Location"
-
 #Création du dialogue pour la séléction du chemin
 $FilePath                   = New-Object System.Windows.Forms.OpenFileDialog
-
 # Event click
 $ButtonLocation.Add_Click({ #Quand le button cliqué
     $FilePath.ShowDialog() # Affiche la page de dialogue pour la séléction du chemin
@@ -126,7 +146,7 @@ $ButtonLocation2.Size       = New-Object System.Drawing.Size(75,23)
 $ButtonLocation2.Text       = "Location"
 #Création du dialogue pour la séléction du chemin
 $FolderPath = New-Object System.Windows.Forms.FolderBrowserDialog
-# Event click
+### Event click ###
 $ButtonLocation2.Add_Click({
     $FolderPath.ShowDialog() # Affiche la page de dialogue pour la séléction du chemin
     if ($FolderPath.SelectedPath -eq $FolderPath.SelectedPath) # Si le chemin = le chemin alors
@@ -146,125 +166,107 @@ $OKButton.Location     = New-Object System.Drawing.Size(10,180)
 $OKButton.Size         = New-Object System.Drawing.Size(75,23)
 #Text du button
 $OKButton.Text         = "Convertir"
-# Event click
+### Event click ###
 $OKButton.Add_Click({ 
 #Output
 $SelectedOutput = $ComboboxTypeOutput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
 $script:x += $ComboboxTypeOutput.SelectedItem # Pour qu'un seul item soit séléctionné
-#if (![string]::IsNullOrWhiteSpace($SelectedOutput)) { # Pas sur à chercher
-#            switch ($SelectedOutput) { # list
-#                ".csv" {}
-#                ".json" {}
-#                ".xml" {}
-#                ".xls" {}
-#            }
-            
-#        }
 #Input
 $SelectedInput = $ComboboxTypeInput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
 $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléctionné
 #CSV
-    #if($FilePath.FileName -like "*csv*" -or $FilePath.FileName -like "*json*" -or $FilePath.FileName -like "*xml*")
-    
-
+#Debug verification si le chemin d'entrée est vide
     if($FilePath.FileName -eq "")
     {
-        [System.Windows.Forms.MessageBox]::Show("Chemin d'entrée non défini",'Erreur','Ok','Error')
-        $LabelInfo.ForeColor = "Red"
-        $LabelInfo.Text = "Chemin d'entrée non spécifié"
+        [System.Windows.Forms.MessageBox]::Show("Chemin d'entrée non défini",'Erreur','Ok','Error') # Message d'erreur
+        $LabelInfo.ForeColor = "Red" # Changement de couleur pour le text du chemin d'entrée
+        $LabelInfo.Text = "Chemin d'entrée non spécifié" # On remet le text car il disparait après avoir mis un chemin Null
     }
     else
     {
-        $FileExtension = Get-Item $FilePath.FileName
+        $FileExtension = Get-Item $FilePath.FileName # on extrait l'information de l'extension du fichier et on la stock dans la variable $FileExtension
     }
+#Debug verification si le chemin de sortie est vide
     if($FolderPath.SelectedPath -eq "")
     {
-        [System.Windows.Forms.MessageBox]::Show("Chemin de sorti non défini",'Erreur','Ok','Error')
-        $LabelInfo2.ForeColor = "red"
-        $LabelInfo2.Text = "Chemin de sorti non spécifié"
+        [System.Windows.Forms.MessageBox]::Show("Chemin de sorti non défini",'Erreur','Ok','Error') # Message d'erreur
+        $LabelInfo2.ForeColor = "red" # Changement de couleur pour le text du chemin de sortie
+        $LabelInfo2.Text = "Chemin de sortie non spécifié" # On remet le text car il disparait après avoir mis un chemin Null
     }
-    else
-    {
-
-    }
+#Debug verification si l'extension du fichier corrrespond au format d'entrée séléctionné
     if($FileExtension.Extension -like $SelectedInput)
-    
         {
-            $LabelFormatInput.ForeColor = "Green"
-            $Destionation = $FolderPath.SelectedPath
-            if ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".csv") 
+            $LabelFormatInput.ForeColor = "Green" # Changement de couleur pour le text du format d'entrée
+            $OutputFileName = $TextBoxOutPutFileName.Text
+            $Destionation = $FolderPath.SelectedPath # On stock le chemin séléctionné dans la variable $Destination
+            if ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".csv") # Si la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                import-csv -Delimiter ";" $FilePath.FileName | ConvertTo-Json | Add-Content -Path "$Destionation\outputcsv.json"
+                import-csv -Delimiter ";" $FilePath.FileName | ConvertTo-Json | Add-Content -Path "$Destionation\$OutputFileName.json"
             }
-            elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".csv") 
+            elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                import-csv -Delimiter ";" $FilePath.FileName | Export-Clixml "$Destionation\outputcsv.xml" 
+                import-csv -Delimiter ";" $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml" 
             }
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".csv")
+            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-            }
-
-#json
-
-            elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".json") 
-            {
-                Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter ";" | Out-File "$Destionation\outputjson.csv" 
-            }
-            elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".json") 
-            {
-                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml "$Destionation\outputjson.xml" 
-            }
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".json") 
-            {
+                [System.Windows.Forms.MessageBox]::Show("xls pas fait",'Information','Ok','warning')
             }
 
-#xml
+#json#
 
-            elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xml") 
+            elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter ";" | Add-Content -Path "$Destionation\outputxml.csv" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter ";" | Out-File "$Destionation\$OutputFileName.csv" 
             }
-            elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".xml")
+            elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Import-Clixml $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\outputxml.json" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml "$Destionation\$OutputFileName.xml" 
             }
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".xml")
+            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
+                [System.Windows.Forms.MessageBox]::Show("xls pas fait",'Information','Ok','warning')
             }
 
+#xml#
 
-#Input = Output Error
-            elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".csv") 
+            elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
+                Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter ";" | Add-Content -Path "$Destionation\$OutputFileName.csv" 
+            }
+            elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+            {
+                Import-Clixml $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\$OutputFileName.json" 
+            }
+            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+            {
+                [System.Windows.Forms.MessageBox]::Show("xls pas fait",'Information','Ok','warning')
+            }
+
+#Error Input Output#
+            elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".x" et entrée = ".x"
+            {
+                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
                 
             }  
-            elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".json") 
+            elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".json") #Sinon la sortie = ".x" et entrée = ".x"
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
+                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
             }
-            elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".xml") 
+            elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".x" et entrée = ".x"
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
+                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
             }  
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".xls") 
+            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".xls") #Sinon la sortie = ".x" et entrée = ".x"
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error')
+                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
             } 
         }
-#    elseif ($FolderPath.SelectedPath = "")
-#    {
-#        $LabelInfo2.Text = "Chemin non défini ou invalide"
-#        $LabelInfo2.ForeColor = "red"
-#        [System.Windows.Forms.MessageBox]::Show('Chemin Input non défini ou invalide','Erreur','Ok','Error')
-#    }
-    #elseif ($FilePath.FileName = "")
     else
     {
-        if($FileExtension.Extension -NotLike $SelectedInput)
+        if($FileExtension.Extension -NotLike $SelectedInput) # Si l'extension ne conrrespond pas au fichier séléctionné alors
         {
-            $LabelFormatInput.ForeColor = "red"
-            [System.Windows.Forms.MessageBox]::Show("Format d'entrée non défini ou invalide",'Erreur','Ok','Error')
+            $LabelFormatInput.ForeColor = "red" # Changement de couleur pour le text du format d'entrée
+            [System.Windows.Forms.MessageBox]::Show("Format d'entrée non défini ou invalide",'Erreur','Ok','Error') # Message d'erreur
         }
     }   
 })
@@ -287,7 +289,7 @@ $ComboboxTypeInput.Items.Add(".csv") #[void] $ComboboxTypeInput.Items.Add("csv")
 $ComboboxTypeInput.Items.Add(".json")
 $ComboboxTypeInput.Items.Add(".xml")
 $ComboboxTypeInput.Items.Add(".xls")
-
+#Item par défaut
 $ComboboxTypeInput.SelectedIndex = 0
 ##########################
 #     Combobox Output    #
@@ -305,14 +307,17 @@ $ComboboxTypeOutput.Items.Add(".csv")
 $ComboboxTypeOutput.Items.Add(".json")
 $ComboboxTypeOutput.Items.Add(".xml")
 $ComboboxTypeOutput.Items.Add(".xls")
-
+#Item par défaut
 $ComboboxTypeOutput.SelectedIndex = 1
 ##############################################################################################
 #                                              Control ToolBox                               #
 ##############################################################################################
 # Déclare les variables du ToolBox pour les afficher
 $main_form.controls.AddRange(@(
+#TextBox
+$TextBoxOutPutFileName
 #Label
+$LabelOutputName
 $LabelFormatInput
 $LabelFormatOutput
 $LabelInfo
