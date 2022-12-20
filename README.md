@@ -2,7 +2,7 @@
 ## What's this ?
 A small ps1 script to convert table files to different format
 ## Why should I use it ?
-Because its ⬇️
+<strong>Because its</strong> ⬇️
 + More easier and faster
 + More intuitive
 + Have more feature
