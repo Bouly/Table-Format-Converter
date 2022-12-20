@@ -7,6 +7,8 @@ Add-Type -AssemblyName System.Drawing
 ##############################################################################################################################
 #                                                              Function                                                      #
 ##############################################################################################################################
+#Var
+$Delimiter = ";"
 #Funtion
 function ModuleMissing_Visible {
     $LabelModuleCheck.Visible = $true
@@ -15,18 +17,6 @@ function ModuleMissing_Visible {
 function ModuleMissing_Invisible {
     $LabelModuleCheck.Visible = $false
     $ButtonInstallModule.Visible = $false
-}
-#Var
-$Delimiter = ";"
-#$Module = "true"
-##############################################################################################################################
-#                                                           Module Checker                                                   #
-##############################################################################################################################
-if (Get-Module -ListAvailable -Name ImportExcel) {
-    $Module = "true"
-}
-else {
-    $Module = "false"
 }
 ##############################################################################################################################
 #                                                          Window Settings                                                   #
@@ -156,8 +146,9 @@ $ButtonInstallModule.Text        = "Install"
 # Event click
 $ButtonInstallModule.Add_Click({ #Quand le button cliqué
     Install-Module ImportExcel -AllowClobber -Force
-    [System.Windows.Forms.MessageBox]::Show("Le module ImportExcel a bien était Installé",'Module installé','Ok','Information')
+    [System.Windows.Forms.MessageBox]::Show("Le module $ModuleCheck a bien était Installé",'Module installé','Ok','Information')
     ModuleMissing_Invisible
+    $ModuleCheck = "true"
 })
 ##########################
 #    Button Input Loc    #
@@ -215,7 +206,14 @@ $OKButton.Size         = New-Object System.Drawing.Size(75,23)
 #Text du button
 $OKButton.Text         = "Convertir"
 ### Event click ###
-$OKButton.Add_Click({ 
+$OKButton.Add_Click({
+# Module ImportExcel Check
+    if (Get-Module -ListAvailable -Name ImportExcel) {
+        $ModuleCheck = "true"
+    } 
+    else {
+        $ModuleCheck = "false"
+    }
 #Output
 $SelectedOutput = $ComboboxTypeOutput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
 $script:x += $ComboboxTypeOutput.SelectedItem # Pour qu'un seul item soit séléctionné
@@ -257,7 +255,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             }
             elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                If ($Module -eq "true")
+                If ($ModuleCheck -eq "true")
                 {
                 import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
                 }
