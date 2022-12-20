@@ -67,12 +67,12 @@ $LabelModuleCheck.Size      = New-Object System.Drawing.Size(200,20)
 #Text du Label
 $LabelModuleCheck.Text      = "Module ImportExcel non installé"
 #Couleur du Label
-$LabelModuleCheck.ForeColor        = "Red"
+$LabelModuleCheck.ForeColor = "Red"
 ##########################
 #   Label Output Name    #
 ##########################
 #Création du label pour le nom du fichier
-$LabelOutputName            = New-Object System.Windows.Forms.Label
+$LabelOutputName           = New-Object System.Windows.Forms.Label
 #Location du label
 $LabelOutputName.Location  = New-Object System.Drawing.Size(390,20)
 #Taille du label
@@ -102,7 +102,7 @@ $LabelFormatOutput.Size     = New-Object System.Drawing.Size(100,20)
 #Text du label
 $LabelFormatOutput.Text     = "Format de sortie"
 #Couleur du text
-$LabelFormatOutput.ForeColor        = "black"
+$LabelFormatOutput.ForeColor= "black"
 ##########################
 #    Label Info Input    #
 ##########################
@@ -145,10 +145,10 @@ $ButtonInstallModule.Size        = New-Object System.Drawing.Size(75,23)
 $ButtonInstallModule.Text        = "Install"
 # Event click
 $ButtonInstallModule.Add_Click({ #Quand le button cliqué
-    Install-Module ImportExcel -AllowClobber -Force
-    [System.Windows.Forms.MessageBox]::Show("Le module $ModuleCheck a bien était Installé",'Module installé','Ok','Information')
-    ModuleMissing_Invisible
-    $ModuleCheck = "true"
+    Install-Module ImportExcel -AllowClobber -Force # Installation du module ImportExcel -AllowClobber(Persmission) -Force(Focer l'installation)
+    [System.Windows.Forms.MessageBox]::Show("Le module ImportExcel a bien était Installé",'Module installé','Ok','Information') #Message informatif
+    ModuleMissing_Invisible # Cacher la partie Installation du module
+    $ModuleCheck = "true" # On passe la variable $ModuleCheck en "true" car le module est installé
 })
 ##########################
 #    Button Input Loc    #
@@ -208,10 +208,10 @@ $OKButton.Text         = "Convertir"
 ### Event click ###
 $OKButton.Add_Click({
 # Module ImportExcel Check
-    if (Get-Module -ListAvailable -Name ImportExcel) {
-        $ModuleCheck = "true"
+    if (Get-Module -ListAvailable -Name ImportExcel) { # On va chercher "ImporterExcel" dans liste tout les modules installé
+        $ModuleCheck = "true" # si il est présent alors "$ModuleCheck = true"
     } 
-    else {
+    else { # Sinon
         $ModuleCheck = "false"
     }
 #Output
@@ -255,14 +255,14 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             }
             elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                If ($ModuleCheck -eq "true")
+                If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
                 import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
                 }
-                else
+                else # Sinon
                 {
-                    ModuleMissing_Visible
-                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning')
+                    ModuleMissing_Visible #  On affiche la partie de l'installation du module
+                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 }
             }
 
