@@ -1,0 +1,51 @@
+[
+  {
+    "Nom": "Kueviakoe",
+    "Prenom": "Kevin",
+    "Naissance": "12/01/2004",
+    "Metier": "IT",
+    "Alias": "CP-20KEK"
+  },
+  {
+    "Nom": "Boulahdjar",
+    "Prenom": "Ahmed",
+    "Naissance": "31/05/2004",
+    "Metier": "IT",
+    "Alias": "CP-20AHB"
+  },
+  {
+    "Nom": "Beglieri",
+    "Prenom": "Evan",
+    "Naissance": "05/10/2004",
+    "Metier": "IT",
+    "Alias": "CP-20EVB"
+  },
+  {
+    "Nom": "Celik",
+    "Prenom": "Dilan",
+    "Naissance": "08/06/2004",
+    "Metier": "IT",
+    "Alias": "CP-20DIC"
+  },
+  {
+    "Nom": "Brun",
+    "Prenom": "Sebastien",
+    "Naissance": "03/07/2004",
+    "Metier": "IT",
+    "Alias": "CP-SEB"
+  },
+  {
+    "Nom": "Pindi De Souza",
+    "Prenom": "Bayron",
+    "Naissance": "04/11/2005",
+    "Metier": "IT",
+    "Alias": "CP-BAP"
+  },
+  {
+    "Nom": "Ki",
+    "Prenom": "Ket",
+    "Naissance": "09/04/2004",
+    "Metier": "IT",
+    "Alias": "CP-KET"
+  }
+]

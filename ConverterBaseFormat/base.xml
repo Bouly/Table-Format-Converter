@@ -1,0 +1,75 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Nom">Kueviakoe</S>
+      <S N="Prenom">Kevin</S>
+      <S N="Naissance">12/01/2004</S>
+      <S N="Metier">IT</S>
+      <S N="Alias">CP-20KEK</S>
+    </MS>
+  </Obj>
+  <Obj RefId="1">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="Nom">Boulahdjar</S>
+      <S N="Prenom">Ahmed</S>
+      <S N="Naissance">31/05/2004</S>
+      <S N="Metier">IT</S>
+      <S N="Alias">CP-20AHB</S>
+    </MS>
+  </Obj>
+  <Obj RefId="2">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="Nom">Beglieri</S>
+      <S N="Prenom">Evan</S>
+      <S N="Naissance">05/10/2004</S>
+      <S N="Metier">IT</S>
+      <S N="Alias">CP-20EVB</S>
+    </MS>
+  </Obj>
+  <Obj RefId="3">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="Nom">Celik</S>
+      <S N="Prenom">Dilan</S>
+      <S N="Naissance">08/06/2004</S>
+      <S N="Metier">IT</S>
+      <S N="Alias">CP-20DIC</S>
+    </MS>
+  </Obj>
+  <Obj RefId="4">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="Nom">Brun</S>
+      <S N="Prenom">Sebastien</S>
+      <S N="Naissance">03/07/2004</S>
+      <S N="Metier">IT</S>
+      <S N="Alias">CP-SEB</S>
+    </MS>
+  </Obj>
+  <Obj RefId="5">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="Nom">Pindi De Souza</S>
+      <S N="Prenom">Bayron</S>
+      <S N="Naissance">04/11/2005</S>
+      <S N="Metier">IT</S>
+      <S N="Alias">CP-BAP</S>
+    </MS>
+  </Obj>
+  <Obj RefId="6">
+    <TNRef RefId="0" />
+    <MS>
+      <S N="Nom">Ki</S>
+      <S N="Prenom">Ket</S>
+      <S N="Naissance">09/04/2004</S>
+      <S N="Metier">IT</S>
+      <S N="Alias">CP-KET</S>
+    </MS>
+  </Obj>
+</Objs>
