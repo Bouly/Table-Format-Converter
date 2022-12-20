@@ -42,7 +42,7 @@ $main_form.AutoSize         = $true
 # Couleur du fond
 $main_form.BackColor        = "gray"
 # Icon du GUI
-$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon('C:\Users\cp-20ahb\Desktop\refresh.ico')
+$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon('')
 # Bloque la taille max et min
 $main_form.minimumSize      = New-Object System.Drawing.Size(585,365)
 $main_form.maximumSize      = New-Object System.Drawing.Size(585,365)
