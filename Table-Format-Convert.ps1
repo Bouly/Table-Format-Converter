@@ -8,7 +8,6 @@ Add-Type -AssemblyName System.Drawing
 #                                                              Function                                                      #
 ##############################################################################################################################
 #Var
-$Delimiter = ";"
 #Funtion
 function ModuleMissing_Visible {
     $LabelModuleCheck.Visible = $true
@@ -18,6 +17,18 @@ function ModuleMissing_Invisible {
     $LabelModuleCheck.Visible = $false
     $ButtonInstallModule.Visible = $false
 }
+
+function DefaultDelimiter{
+$TextChoiceDelimiter.Visible = $false
+$LabelDelimiter.Visible = $true
+}
+
+function ChoiceDelimiter{
+    $TextChoiceDelimiter.Visible = $true #caca
+    $LabelDelimiter.Visible = $false
+    }
+
+
 ##############################################################################################################################
 #                                                          Window Settings                                                   #
 ##############################################################################################################################
@@ -52,9 +63,37 @@ $TextBoxOutPutFileName.Location = New-Object System.Drawing.Size(390,40)
 $TextBoxOutPutFileName.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $TextBoxOutPutFileName.Text     = "Output"
+
+##########################
+#   TextBox Choice Deli  #
+##########################
+
+#Création du champ de text pour le nom du fichier
+$TextChoiceDelimiter         = New-Object System.windows.Forms.TextBox
+#Location du champ de text
+$TextChoiceDelimiter.Location = New-Object System.Drawing.Size(400,278)
+#Taille du champ de text
+$TextChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
+#L'entrée du champ de text
+$TextChoiceDelimiter.Text     = ","
+
+$TextChoiceDelimiter.Visible  = $false
 ###############################################################
 #                            Label                            #
 ###############################################################
+##########################
+#   Label Delimiter      #
+##########################
+#Création du label pour le nom du fichier
+$LabelDelimiter           = New-Object System.Windows.Forms.Label
+#Location du label
+$LabelDelimiter.Location  = New-Object System.Drawing.Size(305,220)
+#Taille du label
+$LabelDelimiter.Size      = New-Object System.Drawing.Size(200,20)
+#Text du Label
+$LabelDelimiter.Text      = "Delimiter Par défault: " + '"' + $Delimiter + '"'
+#Couleur du Label
+$LabelDelimiter.ForeColor = "Black"
 ##########################
 #   Label Module Check   #
 ##########################
@@ -129,6 +168,45 @@ $LabelInfo2.Size            = New-Object System.Drawing.Size(193,20)
 $LabelInfo2.Text            = "Chemin de sorti non spécifié"
 #Couleur du text
 $LabelInfo2.ForeColor       = "black"
+###############################################################
+#                            RadioButton                      #
+###############################################################
+##########################
+#RadioButton Default Deli#
+##########################
+
+$RadioButtonDefaultDelimiter       = New-Object System.Windows.Forms.RadioButton
+#Location du champ de text
+$RadioButtonDefaultDelimiter.Location = New-Object System.Drawing.Size(290,240)
+#Taille du champ de text
+$RadioButtonDefaultDelimiter.Size     = New-Object System.Drawing.Size(137,20)
+#L'entrée du champ de text
+$RadioButtonDefaultDelimiter.Text     = "Default Delimiter"
+#Activer par défault
+$RadioButtonDefaultDelimiter.Checked = $true
+
+# Event click
+
+$RadioButtonDefaultDelimiter.Add_Click({ #Quand le button est cliqué
+    DefaultDelimiter
+})
+##########################
+#RadioButton Choice Deli #
+##########################
+#
+$RadioButtonChoiceDelimiter       = New-Object System.Windows.Forms.RadioButton
+#Location du champ de text
+$RadioButtonChoiceDelimiter.Location = New-Object System.Drawing.Size(290,280)
+#Taille du champ de text
+$RadioButtonChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
+#L'entrée du champ de text
+$RadioButtonChoiceDelimiter.Text     = "Choice Delimiter"
+
+$RadioButtonChoiceDelimiter.Add_Click({ #Quand le button cliqué
+    if ($RadioButtonChoiceDelimiter.Checked -eq $true) {
+        ChoiceDelimiter
+    }
+})
 ###############################################################
 #                            Button                           #
 ###############################################################
@@ -207,6 +285,16 @@ $OKButton.Size         = New-Object System.Drawing.Size(75,23)
 $OKButton.Text         = "Convertir"
 ### Event click ###
 $OKButton.Add_Click({
+# Delimiter
+
+if ($RadioButtonDefaultDelimiter.Checked -eq $true) 
+{
+    $Delimiter = (Get-Culture).Textinfo.ListSeparator
+}
+elseif ($RadioButtonChoiceDelimiter.Checked -eq $true) {
+    $Delimiter = $TextChoiceDelimiter.Text
+}
+
 # Module ImportExcel Check
     if (Get-Module -ListAvailable -Name ImportExcel) { # On va chercher "ImporterExcel" dans liste tout les modules installé
         $ModuleCheck = "true" # si il est présent alors "$ModuleCheck = true"
@@ -385,6 +473,7 @@ $ComboboxTypeOutput.SelectedIndex = 1
 $main_form.controls.AddRange(@(
 #TextBox
 $TextBoxOutPutFileName
+$TextChoiceDelimiter
 #Label
 $LabelOutputName
 $LabelFormatInput
@@ -392,6 +481,7 @@ $LabelFormatOutput
 $LabelInfo
 $LabelInfo2
 $LabelModuleCheck
+$LabelDelimiter
 #Button
 $OKButton
 $ButtonLocation
@@ -400,6 +490,9 @@ $ButtonInstallModule
 #Combobox
 $ComboboxTypeInput
 $ComboboxTypeOutput
+#RadioButton
+$RadioButtonDefaultDelimiter
+$RadioButtonChoiceDelimiter
 ))
 # Affiche/Cache les fenêtre
 ModuleMissing_Invisible
