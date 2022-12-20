@@ -8,3 +8,8 @@ Because its ⬇️
 + Have more feature
 ## How to use it ?
 Just download the PowerShell file and run it, you can also use the files in .\ConverterBaseFormat to test the script
+## Format
++ CSV to JSON, XML and XLSX
++ JSON to CSV, XML and XLSX
++ XML to CSV, JSON and XLSX
++ XLSX to CSV, JSON and XML
