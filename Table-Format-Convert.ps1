@@ -7,8 +7,7 @@ Add-Type -AssemblyName System.Drawing
 ##############################################################################################################################
 #                                                              Function                                                      #
 ##############################################################################################################################
-#Var
-#Funtion
+#Function d'affichage
 function ModuleMissing_Visible {
     $LabelModuleCheck.Visible = $true
     $ButtonInstallModule.Visible = $true
@@ -19,16 +18,14 @@ function ModuleMissing_Invisible {
 }
 
 function DefaultDelimiter{
-$TextChoiceDelimiter.Visible = $false
-$LabelDelimiter.Visible = $true
+    $TextChoiceDelimiter.Visible = $false
+    $LabelDelimiter.Visible = $true
 }
 
 function ChoiceDelimiter{
-    $TextChoiceDelimiter.Visible = $true #caca
+    $TextChoiceDelimiter.Visible = $true
     $LabelDelimiter.Visible = $false
     }
-
-
 ##############################################################################################################################
 #                                                          Window Settings                                                   #
 ##############################################################################################################################
@@ -76,7 +73,7 @@ $TextChoiceDelimiter.Location = New-Object System.Drawing.Size(400,278)
 $TextChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $TextChoiceDelimiter.Text     = ","
-
+#Cacher la TextBox
 $TextChoiceDelimiter.Visible  = $false
 ###############################################################
 #                            Label                            #
@@ -174,7 +171,7 @@ $LabelInfo2.ForeColor       = "black"
 ##########################
 #RadioButton Default Deli#
 ##########################
-
+#Création du Radio Button pour choisir le délimiter par défaut
 $RadioButtonDefaultDelimiter       = New-Object System.Windows.Forms.RadioButton
 #Location du champ de text
 $RadioButtonDefaultDelimiter.Location = New-Object System.Drawing.Size(290,240)
@@ -184,16 +181,14 @@ $RadioButtonDefaultDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 $RadioButtonDefaultDelimiter.Text     = "Default Delimiter"
 #Activer par défault
 $RadioButtonDefaultDelimiter.Checked = $true
-
-# Event click
-
+# Event Click
 $RadioButtonDefaultDelimiter.Add_Click({ #Quand le button est cliqué
-    DefaultDelimiter
+    DefaultDelimiter #Function d'affichage
 })
 ##########################
 #RadioButton Choice Deli #
 ##########################
-#
+#Création du Radio Button pour choisir le délimité à choix
 $RadioButtonChoiceDelimiter       = New-Object System.Windows.Forms.RadioButton
 #Location du champ de text
 $RadioButtonChoiceDelimiter.Location = New-Object System.Drawing.Size(290,280)
@@ -201,11 +196,9 @@ $RadioButtonChoiceDelimiter.Location = New-Object System.Drawing.Size(290,280)
 $RadioButtonChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $RadioButtonChoiceDelimiter.Text     = "Choice Delimiter"
-
+# Event Click
 $RadioButtonChoiceDelimiter.Add_Click({ #Quand le button cliqué
-    if ($RadioButtonChoiceDelimiter.Checked -eq $true) {
-        ChoiceDelimiter
-    }
+        ChoiceDelimiter #Function d'affichage
 })
 ###############################################################
 #                            Button                           #
@@ -286,15 +279,14 @@ $OKButton.Text         = "Convertir"
 ### Event click ###
 $OKButton.Add_Click({
 # Delimiter
-
-if ($RadioButtonDefaultDelimiter.Checked -eq $true) 
-{
-    $Delimiter = (Get-Culture).Textinfo.ListSeparator
-}
-elseif ($RadioButtonChoiceDelimiter.Checked -eq $true) {
-    $Delimiter = $TextChoiceDelimiter.Text
-}
-
+    if ($RadioButtonDefaultDelimiter.Checked -eq $true) # Si la RadioButton est coché sur celui par défault alors
+    {
+        $Delimiter = (Get-Culture).Textinfo.ListSeparator # Le délimiter = au délimiter de base du PC
+    }
+    elseif ($RadioButtonChoiceDelimiter.Checked -eq $true) # Sinon Si la RadioButton est coché sur celui à choix alors
+    {
+        $Delimiter = $TextChoiceDelimiter.Text # Le délimiter = au text de la TextBox
+    }
 # Module ImportExcel Check
     if (Get-Module -ListAvailable -Name ImportExcel) { # On va chercher "ImporterExcel" dans liste tout les modules installé
         $ModuleCheck = "true" # si il est présent alors "$ModuleCheck = true"
