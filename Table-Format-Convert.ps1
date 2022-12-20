@@ -253,7 +253,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml" 
             }
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+            elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
@@ -276,9 +276,9 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml "$Destionation\$OutputFileName.xml" 
             }
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+            elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                [System.Windows.Forms.MessageBox]::Show("xls pas fait",'Information','Ok','warning')
+                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel "$Destionation\$OutputFileName.xlsx"
             }
 
 #xml#
@@ -291,10 +291,25 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 Import-Clixml $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\$OutputFileName.json" 
             }
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+            elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                [System.Windows.Forms.MessageBox]::Show("xls pas fait",'Information','Ok','warning')
+                Import-Clixml $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
             }
+
+#xlsx#
+
+elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+{
+    Import-Excel $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Path "$Destionation\$OutputFileName.csv"
+}
+elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+{
+    Import-Excel $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\$OutputFileName.json" 
+}
+elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
+{
+    Import-Excel $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml"
+}
 
 #Error Input Output#
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".x" et entrée = ".x"
@@ -310,7 +325,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
             }  
-            elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".xls") #Sinon la sortie = ".x" et entrée = ".x"
+            elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xls") #Sinon la sortie = ".x" et entrée = ".x"
             {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
             } 
@@ -342,7 +357,7 @@ $ComboboxTypeInput.Height   = 70
 $ComboboxTypeInput.Items.Add(".csv") #[void] $ComboboxTypeInput.Items.Add("csv")
 $ComboboxTypeInput.Items.Add(".json")
 $ComboboxTypeInput.Items.Add(".xml")
-$ComboboxTypeInput.Items.Add(".xls")
+$ComboboxTypeInput.Items.Add(".xlsx")
 #Item par défaut
 $ComboboxTypeInput.SelectedIndex = 0
 ##########################
@@ -360,7 +375,7 @@ $ComboboxTypeOutput.Height   = 70
 $ComboboxTypeOutput.Items.Add(".csv")
 $ComboboxTypeOutput.Items.Add(".json")
 $ComboboxTypeOutput.Items.Add(".xml")
-$ComboboxTypeOutput.Items.Add(".xls")
+$ComboboxTypeOutput.Items.Add(".xlsx")
 #Item par défaut
 $ComboboxTypeOutput.SelectedIndex = 1
 ##############################################################################################
