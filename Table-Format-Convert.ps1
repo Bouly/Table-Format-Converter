@@ -34,22 +34,21 @@ $main_form.maximumSize      = New-Object System.Drawing.Size(565,365)
 ###############################################################
 #                            TextBox                          #
 ###############################################################
-
+#Création du champ de text pour le nom du fichier
 $TextBoxOutPutFileName      = New-Object System.windows.Forms.TextBox
-
+#Location du champ de text
 $TextBoxOutPutFileName.Location = New-Object System.Drawing.Size(390,40)
-
+#Taille du champ de text
 $TextBoxOutPutFileName.Size = New-Object System.Drawing.Size(137,20)
-
+#L'entrée du champ de text
 $TextBoxOutPutFileName.Text = "Output"
-
 ###############################################################
 #                            Label                            #
 ###############################################################
 ##########################
 #   Label Output Name    #
 ##########################
-
+#Création du label pour le nom du fichier
 $LabelOutputName          = New-Object System.Windows.Forms.Label
 #Location du label
 $LabelOutputName.Location  = New-Object System.Drawing.Size(390,20)
@@ -57,7 +56,6 @@ $LabelOutputName.Location  = New-Object System.Drawing.Size(390,20)
 $LabelOutputName.Size      = New-Object System.Drawing.Size(137,20)
 #Text du Label
 $LabelOutputName.Text      = "Nom du fichier de sortie"
-
 ##########################
 #   Label Input format   #
 ##########################
