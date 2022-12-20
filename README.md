@@ -1,6 +1,6 @@
 # Table-Format-Converter
 ## What's this ?
-A small ps1 script to convert array files
+A small ps1 script to convert table files to different format
 ## Why should I use it ?
 Because its ⬇️
 + test
