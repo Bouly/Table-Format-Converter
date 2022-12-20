@@ -8,6 +8,26 @@ Add-Type -AssemblyName System.Drawing
 #                                                              Function                                                      #
 ##############################################################################################################################
 #Funtion
+function ModuleMissing_Visible {
+    $LabelModuleCheck.Visible = $true
+    $ButtonInstallModule.Visible = $true
+}
+function ModuleMissing_Invisible {
+    $LabelModuleCheck.Visible = $false
+    $ButtonInstallModule.Visible = $false
+}
+#Var
+$Delimiter = ";"
+#$Module = "true"
+##############################################################################################################################
+#                                                           Module Checker                                                   #
+##############################################################################################################################
+if (Get-Module -ListAvailable -Name ImportExcel) {
+    $Module = "true"
+}
+else {
+    $Module = "false"
+}
 ##############################################################################################################################
 #                                                          Window Settings                                                   #
 ##############################################################################################################################
@@ -26,8 +46,8 @@ $main_form.BackColor        = "gray"
 # Icon du GUI
 $main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon('C:\Users\cp-20ahb\Desktop\refresh.ico')
 # Bloque la taille max et min
-$main_form.minimumSize      = New-Object System.Drawing.Size(565,365)
-$main_form.maximumSize      = New-Object System.Drawing.Size(565,365)
+$main_form.minimumSize      = New-Object System.Drawing.Size(585,365)
+$main_form.maximumSize      = New-Object System.Drawing.Size(585,365)
 ##############################################################################################
 #                                              Toolbox                                       #
 ##############################################################################################
@@ -35,21 +55,34 @@ $main_form.maximumSize      = New-Object System.Drawing.Size(565,365)
 #                            TextBox                          #
 ###############################################################
 #Création du champ de text pour le nom du fichier
-$TextBoxOutPutFileName      = New-Object System.windows.Forms.TextBox
+$TextBoxOutPutFileName          = New-Object System.windows.Forms.TextBox
 #Location du champ de text
 $TextBoxOutPutFileName.Location = New-Object System.Drawing.Size(390,40)
 #Taille du champ de text
-$TextBoxOutPutFileName.Size = New-Object System.Drawing.Size(137,20)
+$TextBoxOutPutFileName.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
-$TextBoxOutPutFileName.Text = "Output"
+$TextBoxOutPutFileName.Text     = "Output"
 ###############################################################
 #                            Label                            #
 ###############################################################
 ##########################
+#   Label Module Check   #
+##########################
+#Création du label pour le nom du fichier
+$LabelModuleCheck           = New-Object System.Windows.Forms.Label
+#Location du label
+$LabelModuleCheck.Location  = New-Object System.Drawing.Size(390,80)
+#Taille du label
+$LabelModuleCheck.Size      = New-Object System.Drawing.Size(200,20)
+#Text du Label
+$LabelModuleCheck.Text      = "Module ImportExcel non installé"
+#Couleur du Label
+$LabelModuleCheck.ForeColor        = "Red"
+##########################
 #   Label Output Name    #
 ##########################
 #Création du label pour le nom du fichier
-$LabelOutputName          = New-Object System.Windows.Forms.Label
+$LabelOutputName            = New-Object System.Windows.Forms.Label
 #Location du label
 $LabelOutputName.Location  = New-Object System.Drawing.Size(390,20)
 #Taille du label
@@ -101,7 +134,7 @@ $LabelInfo2                 = New-Object System.Windows.Forms.Label
 #Location du label
 $LabelInfo2.Location        = New-Object System.Drawing.Size(200, 80)
 #Taille du label
-$LabelInfo2.Size            = New-Object System.Drawing.Size(200,20)
+$LabelInfo2.Size            = New-Object System.Drawing.Size(193,20)
 #Text du label
 $LabelInfo2.Text            = "Chemin de sorti non spécifié"
 #Couleur du text
@@ -109,6 +142,23 @@ $LabelInfo2.ForeColor       = "black"
 ###############################################################
 #                            Button                           #
 ###############################################################
+##########################
+# Button Install Module  #
+##########################
+#Création du button pour l'installation du module manquant
+$ButtonInstallModule             = New-Object System.Windows.Forms.Button
+#Location du button
+$ButtonInstallModule.Location    = New-Object System.Drawing.Size(390,100)
+#Taille du button
+$ButtonInstallModule.Size        = New-Object System.Drawing.Size(75,23)
+#Text du button
+$ButtonInstallModule.Text        = "Install"
+# Event click
+$ButtonInstallModule.Add_Click({ #Quand le button cliqué
+    Install-Module ImportExcel -AllowClobber -Force
+    [System.Windows.Forms.MessageBox]::Show("Le module ImportExcel a bien était Installé",'Module installé','Ok','Information')
+    ModuleMissing_Invisible
+})
 ##########################
 #    Button Input Loc    #
 ##########################
@@ -199,22 +249,30 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             $Destionation = $FolderPath.SelectedPath # On stock le chemin séléctionné dans la variable $Destination
             if ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".csv") # Si la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                import-csv -Delimiter ";" $FilePath.FileName | ConvertTo-Json | Add-Content -Path "$Destionation\$OutputFileName.json"
+                import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Add-Content -Path "$Destionation\$OutputFileName.json"
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                import-csv -Delimiter ";" $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml" 
+                import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml" 
             }
             elseif ($SelectedOutput -eq ".xls" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                [System.Windows.Forms.MessageBox]::Show("xls pas fait",'Information','Ok','warning')
+                If ($Module -eq "true")
+                {
+                import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
+                }
+                else
+                {
+                    ModuleMissing_Visible
+                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning')
+                }
             }
 
 #json#
 
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter ";" | Out-File "$Destionation\$OutputFileName.csv" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter "$Delimiter" | Out-File "$Destionation\$OutputFileName.csv" 
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
@@ -229,7 +287,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
 
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter ";" | Add-Content -Path "$Destionation\$OutputFileName.csv" 
+                Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Path "$Destionation\$OutputFileName.csv" 
             }
             elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
@@ -320,13 +378,16 @@ $LabelFormatInput
 $LabelFormatOutput
 $LabelInfo
 $LabelInfo2
+$LabelModuleCheck
 #Button
 $OKButton
 $ButtonLocation
 $ButtonLocation2
+$ButtonInstallModule
 #Combobox
 $ComboboxTypeInput
 $ComboboxTypeOutput
 ))
-# Affiche la fenêtre
+# Affiche/Cache les fenêtre
+ModuleMissing_Invisible
 $main_form.ShowDialog()
