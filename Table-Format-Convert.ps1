@@ -278,7 +278,9 @@ $OKButton.Size         = New-Object System.Drawing.Size(75,23)
 $OKButton.Text         = "Convertir"
 ### Event click ###
 $OKButton.Add_Click({
-# Delimiter
+#############
+# Delimiter #
+#############
     if ($RadioButtonDefaultDelimiter.Checked -eq $true) # Si la RadioButton est coché sur celui par défault alors
     {
         $Delimiter = (Get-Culture).Textinfo.ListSeparator # Le délimiter = au délimiter de base du PC
@@ -287,20 +289,25 @@ $OKButton.Add_Click({
     {
         $Delimiter = $TextChoiceDelimiter.Text # Le délimiter = au text de la TextBox
     }
-# Module ImportExcel Check
+############################
+# Module ImportExcel Check #
+############################
     if (Get-Module -ListAvailable -Name ImportExcel) { # On va chercher "ImporterExcel" dans liste tout les modules installé
         $ModuleCheck = "true" # si il est présent alors "$ModuleCheck = true"
     } 
     else { # Sinon
         $ModuleCheck = "false"
     }
-#Output
+########
+#Output#
+########
 $SelectedOutput = $ComboboxTypeOutput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
 $script:x += $ComboboxTypeOutput.SelectedItem # Pour qu'un seul item soit séléctionné
-#Input
+#######
+#Input#
+#######
 $SelectedInput = $ComboboxTypeInput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
 $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléctionné
-#CSV
 #Debug verification si le chemin d'entrée est vide
     if($FilePath.FileName -eq "")
     {
@@ -325,6 +332,9 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             $LabelFormatInput.ForeColor = "Green" # Changement de couleur pour le text du format d'entrée
             $OutputFileName = $TextBoxOutPutFileName.Text
             $Destionation = $FolderPath.SelectedPath # On stock le chemin séléctionné dans la variable $Destination
+#####
+#CSV#
+#####
             if ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".csv") # Si la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Add-Content -Path "$Destionation\$OutputFileName.json"
@@ -345,9 +355,9 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                     [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 }
             }
-
+######
 #json#
-
+######
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter "$Delimiter" | Out-File "$Destionation\$OutputFileName.csv" 
@@ -360,9 +370,9 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel "$Destionation\$OutputFileName.xlsx"
             }
-
+#####
 #xml#
-
+#####
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Path "$Destionation\$OutputFileName.csv" 
@@ -375,9 +385,9 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 Import-Clixml $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
             }
-
+######
 #xlsx#
-
+######
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 Import-Excel $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Path "$Destionation\$OutputFileName.csv"
@@ -392,6 +402,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             }
 
 #Error Input Output#
+
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".x" et entrée = ".x"
             {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
