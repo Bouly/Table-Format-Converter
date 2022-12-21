@@ -15,6 +15,7 @@ $Delimiter = (Get-Culture).Textinfo.ListSeparator # Le délimiter = au délimite
 function ModuleMissing_Visible {
     $LabelModuleCheck.Visible = $true
     $ButtonInstallModule.Visible = $true
+    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
 }
 function ModuleMissing_Invisible {
     $LabelModuleCheck.Visible = $false
@@ -30,6 +31,10 @@ function ChoiceDelimiter{
     $TextChoiceDelimiter.Visible = $true
     $LabelDelimiter.Visible = $false
     }
+
+function YouCant{
+    [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
+}
 ##############################################################################################################################
 #                                                          Window Settings                                                   #
 ##############################################################################################################################
@@ -223,7 +228,6 @@ $ButtonInstallModule.Add_Click({ #Quand le button cliqué
     Install-Module ImportExcel -AllowClobber -Force # Installation du module ImportExcel -AllowClobber(Persmission) -Force(Focer l'installation)
     [System.Windows.Forms.MessageBox]::Show("Le module ImportExcel a bien était Installé",'Module installé','Ok','Information') #Message informatif
     ModuleMissing_Invisible # Cacher la partie Installation du module
-    $ModuleCheck = "true" # On passe la variable $ModuleCheck en "true" car le module est installé
 })
 ##########################
 #    Button Input Loc    #
@@ -336,7 +340,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
     if($FileExtension.Extension -like $SelectedInput)
         {
             $LabelFormatInput.ForeColor = "Green" # Changement de couleur pour le text du format d'entrée
-            $OutputFileName = $TextBoxOutPutFileName.Text
+            $OutputFileName = $TextBoxOutPutFileName.Text # On stock le nom entrée dans la text box dans $OutputFileName
             $Destionation = $FolderPath.SelectedPath # On stock le chemin séléctionné dans la variable $Destination
 #####
 #CSV#
@@ -358,7 +362,6 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
                     ModuleMissing_Visible #  On affiche la partie de l'installation du module
-                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 }
             }
 ######
@@ -381,7 +384,6 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
                     ModuleMissing_Visible #  On affiche la partie de l'installation du module
-                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 }
                 
             }
@@ -405,7 +407,6 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
                     ModuleMissing_Visible #  On affiche la partie de l'installation du module
-                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 }
             }
 ######
@@ -420,7 +421,6 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
                     ModuleMissing_Visible #  On affiche la partie de l'installation du module
-                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 }
             }
             elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
@@ -432,7 +432,6 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
                     ModuleMissing_Visible #  On affiche la partie de l'installation du module
-                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 } 
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
@@ -444,28 +443,28 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
                     ModuleMissing_Visible #  On affiche la partie de l'installation du module
-                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
                 }
             }
 
-#Error Input Output#
+#Error Input Output# A Compacté
 
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".x" et entrée = ".x"
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
+                YouCant # Message d'erreur
+                $ComboboxTypeOutput.SelectedIndex = 1
                 
             }  
             elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".json") #Sinon la sortie = ".x" et entrée = ".x"
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
+                YouCant # Message d'erreur
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".x" et entrée = ".x"
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
+                YouCant # Message d'erreur
             }  
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".x" et entrée = ".x"
             {
-                [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
+                YouCant # Message d'erreur
             } 
         }
     else
