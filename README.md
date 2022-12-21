@@ -15,3 +15,7 @@ Just download the PowerShell file and run it, you can also use the files in .\Co
 + <strong>XLSX</strong> to <strong>CSV</strong>, <strong>JSON</strong> and <strong>XML</strong>
 
 ![TableFormatConverter](https://user-images.githubusercontent.com/94909482/208650436-e489f538-29bf-49e8-a7e8-ceb65c4e1f06.PNG)
+
+## To do list
++ Verifier si un fichier a deja le meme nom --> popup error
+
