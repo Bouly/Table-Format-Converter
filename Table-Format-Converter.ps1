@@ -282,6 +282,17 @@ $OKButton.Size         = New-Object System.Drawing.Size(75,23)
 $OKButton.Text         = "Convertir"
 ### Event click ###
 $OKButton.Add_Click({
+############################
+# Module ImportExcel Check #
+############################
+if (Get-Module -ListAvailable -Name ImportExcel) 
+{ # On va chercher "ImporterExcel" dans liste tout les modules installé
+    $ModuleCheck = "true" # si il est présent alors "$ModuleCheck = true"
+} 
+else 
+{ # Sinon
+    $ModuleCheck = "false"
+}
 #############
 # Delimiter #
 #############
@@ -292,15 +303,6 @@ $OKButton.Add_Click({
     elseif ($RadioButtonChoiceDelimiter.Checked -eq $true) # Sinon Si la RadioButton est coché sur celui à choix alors
     {
         $Delimiter = $TextChoiceDelimiter.Text # Le délimiter = au text de la TextBox
-    }
-############################
-# Module ImportExcel Check #
-############################
-    if (Get-Module -ListAvailable -Name ImportExcel) { # On va chercher "ImporterExcel" dans liste tout les modules installé
-        $ModuleCheck = "true" # si il est présent alors "$ModuleCheck = true"
-    } 
-    else { # Sinon
-        $ModuleCheck = "false"
     }
 ########
 #Output#
@@ -353,7 +355,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 {
                 import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
                 }
-                else # Sinon
+                elseif ($ModuleCheck -eq "false") # Sinon
                 {
                     ModuleMissing_Visible #  On affiche la partie de l'installation du module
                     [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
@@ -372,7 +374,16 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             }
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel "$Destionation\$OutputFileName.xlsx"
+                If ($ModuleCheck -eq "true") # Si le module est présent alors 
+                {
+                    Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel "$Destionation\$OutputFileName.xlsx"  
+                }
+                elseif ($ModuleCheck -eq "false") # Sinon
+                {
+                    ModuleMissing_Visible #  On affiche la partie de l'installation du module
+                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
+                }
+                
             }
 #####
 #xml#
@@ -387,22 +398,54 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             }
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
+                If ($ModuleCheck -eq "true") # Si le module est présent alors 
+                {
                 Import-Clixml $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
+                }
+                elseif ($ModuleCheck -eq "false") # Sinon
+                {
+                    ModuleMissing_Visible #  On affiche la partie de l'installation du module
+                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
+                }
             }
 ######
 #xlsx#
 ######
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
+                If ($ModuleCheck -eq "true") # Si le module est présent alors
+                {
                 Import-Excel $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Path "$Destionation\$OutputFileName.csv"
+                }
+                elseif ($ModuleCheck -eq "false") # Sinon
+                {
+                    ModuleMissing_Visible #  On affiche la partie de l'installation du module
+                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
+                }
             }
             elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Import-Excel $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\$OutputFileName.json" 
+                If ($ModuleCheck -eq "true") # Si le module est présent alors
+                {
+                    Import-Excel $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\$OutputFileName.json"
+                }
+                elseif ($ModuleCheck -eq "false") # Sinon
+                {
+                    ModuleMissing_Visible #  On affiche la partie de l'installation du module
+                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
+                } 
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
+                If ($ModuleCheck -eq "true") # Si le module est présent alors 
+                {
                 Import-Excel $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml"
+                }
+                elseif ($ModuleCheck -eq "false") # Sinon
+                {
+                    ModuleMissing_Visible #  On affiche la partie de l'installation du module
+                    [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
+                }
             }
 
 #Error Input Output#
