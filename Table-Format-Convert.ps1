@@ -7,6 +7,9 @@ Add-Type -AssemblyName System.Drawing
 ##############################################################################################################################
 #                                                              Function                                                      #
 ##############################################################################################################################
+
+$CurrentPath = Get-Location
+
 #Function d'affichage
 function ModuleMissing_Visible {
     $LabelModuleCheck.Visible = $true
@@ -42,7 +45,7 @@ $main_form.AutoSize         = $true
 # Couleur du fond
 $main_form.BackColor        = "gray"
 # Icon du GUI
-$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon('')
+$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon("$CurrentPath\refresh.ico")
 # Bloque la taille max et min
 $main_form.minimumSize      = New-Object System.Drawing.Size(585,365)
 $main_form.maximumSize      = New-Object System.Drawing.Size(585,365)
