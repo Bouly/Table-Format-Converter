@@ -463,7 +463,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
             }  
-            elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xls") #Sinon la sortie = ".x" et entrée = ".x"
+            elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".x" et entrée = ".x"
             {
                 [System.Windows.Forms.MessageBox]::Show('Vous ne pouvez pas faire cela','Erreur','Ok','Error') # Message d'erreur
             } 
