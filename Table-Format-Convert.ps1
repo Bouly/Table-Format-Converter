@@ -9,6 +9,7 @@ Add-Type -AssemblyName System.Drawing
 ##############################################################################################################################
 
 $CurrentPath = Get-Location
+$Delimiter = (Get-Culture).Textinfo.ListSeparator # Le délimiter = au délimiter de base du PC
 
 #Function d'affichage
 function ModuleMissing_Visible {
