@@ -26,26 +26,26 @@ Add-Type -AssemblyName System.Drawing
 #                                                              Function                                                      #
 ##############################################################################################################################
 
-$CurrentPath = Get-Location
+$CurrentPath = Get-Location # Stock le chemin courant dans une variable
 $Delimiter = (Get-Culture).Textinfo.ListSeparator # Le délimiter = au délimiter de base du PC
 
 #Function d'affichage
-function ModuleMissing_Visible {
+function ModuleMissing_Visible { # Fonction qui rend visible les tools défini
     $LabelModuleCheck.Visible = $true
     $ButtonInstallModule.Visible = $true
     [System.Windows.Forms.MessageBox]::Show("Module ImportExcel est manquant, cliquer sur Install",'Information','Ok','warning') # Message informatif
 }
-function ModuleMissing_Invisible {
+function ModuleMissing_Invisible { # Fonction qui rend invisible les tools défini
     $LabelModuleCheck.Visible = $false
     $ButtonInstallModule.Visible = $false
 }
 
-function DefaultDelimiter{
+function DefaultDelimiter{ # Fonction qui rend visible les tools défini
     $TextChoiceDelimiter.Visible = $false
     $LabelDelimiter.Visible = $true
 }
 
-function ChoiceDelimiter{
+function ChoiceDelimiter{ # Fonction qui rend visible les tools défini
     $TextChoiceDelimiter.Visible = $true
     $LabelDelimiter.Visible = $false
     }
@@ -66,11 +66,10 @@ $main_form.Width            = 400
 $main_form.Height           = 400
 # Étire automatiquement la fenêtre
 $main_form.AutoSize         = $true
-
+# Centre la fênetre lors du lancement du script
 $main_form.StartPosition= 'CenterScreen'
-
+# Design de la fênetre
 $main_form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
-
 # Couleur du fond
 $main_form.BackColor        = '38,36,49'
 # Icon du GUI
@@ -92,13 +91,11 @@ $TextBoxOutPutFileName.Location = New-Object System.Drawing.Size(390,40)
 $TextBoxOutPutFileName.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $TextBoxOutPutFileName.Text     = "Output"
-
+# Design du champ de text
 $TextBoxOutPutFileName.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
-
 ##########################
 #   TextBox Choice Deli  #
 ##########################
-
 #Création du champ de text pour le nom du fichier
 $TextChoiceDelimiter         = New-Object System.windows.Forms.TextBox
 #Location du champ de text
@@ -107,11 +104,10 @@ $TextChoiceDelimiter.Location = New-Object System.Drawing.Size(415,275)
 $TextChoiceDelimiter.Size     = New-Object System.Drawing.Size(15,20)
 #L'entrée du champ de text
 $TextChoiceDelimiter.Text     = ","
-
+#Design du champ de text
 $TextChoiceDelimiter.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
-
+#Limit de charactère dans le champ de text
 $TextChoiceDelimiter.MaxLength = 1
-
 #Cacher la TextBox
 $TextChoiceDelimiter.Visible  = $false
 ###############################################################
@@ -128,12 +124,10 @@ $LabelDelimiter.Location  = New-Object System.Drawing.Size(305,220)
 $LabelDelimiter.Size      = New-Object System.Drawing.Size(200,20)
 #Text du Label
 $LabelDelimiter.Text      = "Délimiter Par défault: " + '" ' + $Delimiter + ' "'
-
+#Police et taille du text du label
 $LabelDelimiter.Font      = "Bahnschrift, 10"
-
 #Couleur du Label
 $LabelDelimiter.ForeColor = "243, 244, 247"
-
 ##########################
 #   Label Module Check   #
 ##########################
@@ -158,9 +152,9 @@ $LabelOutputName.Location  = New-Object System.Drawing.Size(386,20)
 $LabelOutputName.Size      = New-Object System.Drawing.Size(167,20)
 #Text du Label
 $LabelOutputName.Text      = "Nom du fichier"
-
+#Police et taille du text du label
 $LabelOutputName.Font      = [System.Drawing.Font]::new("Verdana", 12)
-
+#Couleur du label
 $LabelOutputName.ForeColor = "243, 244, 247"
 ##########################
 #   Label Input format   #
@@ -173,9 +167,9 @@ $LabelFormatInput.Location  = New-Object System.Drawing.Size(6,20)
 $LabelFormatInput.Size      = New-Object System.Drawing.Size(150,20)
 #Text du Label
 $LabelFormatInput.Text      = "Format d'entrée"
-
+#Police et taille du text du label
 $LabelFormatInput.Font      = [System.Drawing.Font]::new("Verdana", 12)
-
+#Couleur du label
 $LabelFormatInput.ForeColor = "243, 244, 247"
 ##########################
 #   Label Output format  #
@@ -188,9 +182,8 @@ $LabelFormatOutput.Location = New-Object System.Drawing.Size(196,20)
 $LabelFormatOutput.Size     = New-Object System.Drawing.Size(150,20)
 #Text du label
 $LabelFormatOutput.Text     = "Format de sortie"
-
+#Police et taille du label
 $LabelFormatOutput.Font      = [System.Drawing.Font]::new("Verdana", 12)
-
 #Couleur du text
 $LabelFormatOutput.ForeColor= "243, 244, 247"
 ##########################
@@ -206,7 +199,7 @@ $LabelInfo.Size             = New-Object System.Drawing.Size(192,20)
 $LabelInfo.Text             = "Chemin d'entrée non spécifié"
 #Couleur du text
 $LabelInfo.ForeColor        = "243, 244, 247"
-
+#Plice et taille du label
 $LabelInfo.Font      = "Bahnschrift, 10"
 ##########################
 #    Label Info Output   #
@@ -221,7 +214,7 @@ $LabelInfo2.Size            = New-Object System.Drawing.Size(193,20)
 $LabelInfo2.Text            = "Chemin de sorti non spécifié"
 #Couleur du text
 $LabelInfo2.ForeColor       = "243, 244, 247"
-
+#Police et taille du label
 $LabelInfo2.Font      = "Bahnschrift, 10"
 ##########################
 #  Label Delimiter Alert #
@@ -236,9 +229,8 @@ $DelimiterAlert.Size            = New-Object System.Drawing.Size(300,20)
 $DelimiterAlert.Text            = "Délimiter Incorrect"
 #Couleur du text
 $DelimiterAlert.ForeColor       = "red"
-
+#Police et taille du label
 $DelimiterAlert.Font      = "Cascadia Code, 14"
-
 ###############################################################
 #                            RadioButton                      #
 ###############################################################
@@ -253,16 +245,14 @@ $RadioButtonDefaultDelimiter.Location = New-Object System.Drawing.Size(290,240)
 $RadioButtonDefaultDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $RadioButtonDefaultDelimiter.Text     = "Default Delimiter"
-
+#Police et taille du radio button
 $RadioButtonDefaultDelimiter.Font      = "Bahnschrift, 10"
-
+#Design du radio button
 $RadioButtonDefaultDelimiter.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
 #Activer par défault
 $RadioButtonDefaultDelimiter.Checked = $true
-
+#Couleur du radio button
 $RadioButtonDefaultDelimiter.ForeColor       = "243, 244, 247"
-
 # Event Click
 $RadioButtonDefaultDelimiter.Add_Click({ #Quand le button est cliqué
     DefaultDelimiter #Function d'affichage
@@ -278,13 +268,12 @@ $RadioButtonChoiceDelimiter.Location = New-Object System.Drawing.Size(290,280)
 $RadioButtonChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $RadioButtonChoiceDelimiter.Text     = "Choice Delimiter"
-
+#Design du radio button
 $RadioButtonChoiceDelimiter.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
+#Police et taille du text
 $RadioButtonChoiceDelimiter.Font      = "Bahnschrift, 10"
-
+#Couleur du text
 $RadioButtonChoiceDelimiter.ForeColor= "243, 244, 247"
-
 # Event Click
 $RadioButtonChoiceDelimiter.Add_Click({ #Quand le button cliqué
         ChoiceDelimiter #Function d'affichage
@@ -303,13 +292,12 @@ $ButtonInstallModule.Location    = New-Object System.Drawing.Size(390,100)
 $ButtonInstallModule.Size        = New-Object System.Drawing.Size(75,23)
 #Text du button
 $ButtonInstallModule.Text        = "Install"
-
+#Couleur du text
 $ButtonInstallModule.BackColor = "153, 152, 246"
-
+#Taille et police du text
 $ButtonInstallModule.Font      = "Bahnschrift, 10"
-
+#Design Style
 $ButtonInstallModule.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
 # Event click
 $ButtonInstallModule.Add_Click({ #Quand le button cliqué
     Install-Module ImportExcel -AllowClobber -Force # Installation du module ImportExcel -AllowClobber(Persmission) -Force(Focer l'installation)
@@ -327,13 +315,13 @@ $ButtonLocation.Location    = New-Object System.Drawing.Size(10,100)
 $ButtonLocation.Size        = New-Object System.Drawing.Size(75,23)
 #Text du button
 $ButtonLocation.Text        = "Location"
-
+#Police et taille du text
 $ButtonLocation.Font      = "Bahnschrift, 10"
-
+#Couleur du text
 $ButtonLocation.BackColor = "153, 152, 246"
-
+#Deisgn du button
 $ButtonLocation.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
+#Couleur du text
 $ButtonLocation.ForeColor = "243, 244, 247"
 #Création du dialogue pour la séléction du chemin
 $FilePath                   = New-Object System.Windows.Forms.OpenFileDialog
@@ -357,15 +345,14 @@ $ButtonLocation2.Location   = New-Object System.Drawing.Size(200,100)
 $ButtonLocation2.Size       = New-Object System.Drawing.Size(75,23)
 #Text du button
 $ButtonLocation2.Text       = "Location"
-
+#Police et taille
 $ButtonLocation2.Font      = "Bahnschrift, 10"
-
+#Couleur
 $ButtonLocation2.BackColor = "153, 152, 246"
-
+#Couleur du text
 $ButtonLocation2.ForeColor = "243, 244, 247"
-
+#Design
 $ButtonLocation2.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
 #Création du dialogue pour la séléction du chemin
 $FolderPath = New-Object System.Windows.Forms.FolderBrowserDialog
 ### Event click ###
@@ -388,15 +375,14 @@ $OKButton.Location     = New-Object System.Drawing.Size(10,180)
 $OKButton.Size         = New-Object System.Drawing.Size(75,23)
 #Text du button
 $OKButton.Text         = "Convertir"
-
+#Police et taille du text
 $OKButton.Font      = "Bahnschrift, 10"
-
+#Couleur
 $OKButton.BackColor = "153, 152, 246"
-
+#Design
 $OKButton.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
+#Couleur du text
 $OKButton.ForeColor = "243, 244, 247"
-
 ### Event click ###
 $OKButton.Add_Click({
 ############################
@@ -603,9 +589,10 @@ $ComboboxTypeInput.Location = New-Object System.Drawing.Size(10,40)
 $ComboboxTypeInput.Size     = New-Object System.Drawing.Size(120,20)
 #Taille de l'onglet
 $ComboboxTypeInput.Height   = 70
-
+# Design de la combobox
 $ComboboxTypeInput.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
+# Read Only la combobox
+$ComboboxTypeInput.DropDownStyle = [System.Windows.Forms.ComboBoxStyle]::DropDownList
 #Ajout des item dans la combobox
 $ComboboxTypeInput.Items.Add(".csv") #[void] $ComboboxTypeInput.Items.Add("csv")
 $ComboboxTypeInput.Items.Add(".json")
@@ -624,7 +611,8 @@ $ComboboxTypeOutput.Location = New-Object System.Drawing.Size(200,40)
 $ComboboxTypeOutput.Size     = New-Object System.Drawing.Size(120,20)
 
 $ComboboxTypeOutput.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-
+# Read Only la combobox
+$ComboboxTypeOutput.DropDownStyle = [System.Windows.Forms.ComboBoxStyle]::DropDownList
 #Taille de l'onglet
 $ComboboxTypeOutput.Height   = 70
 #Ajout des item dans la combobox
