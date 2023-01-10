@@ -554,7 +554,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             if ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".csv") # Si la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 #import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Add-Content -Path = "$Destionation\$OutputFileName.json"
-                import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Out-File -Path  "$Destionation\$OutputFileName.json"
+                import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Out-File -Encoding $EncodingType -Path  "$Destionation\$OutputFileName.json"
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
