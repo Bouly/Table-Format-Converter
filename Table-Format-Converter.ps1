@@ -66,6 +66,11 @@ $main_form.Width            = 400
 $main_form.Height           = 400
 # Étire automatiquement la fenêtre
 $main_form.AutoSize         = $true
+
+$main_form.StartPosition= 'CenterScreen'
+
+$main_form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
+
 # Couleur du fond
 $main_form.BackColor        = '38,36,49'
 # Icon du GUI
@@ -88,7 +93,7 @@ $TextBoxOutPutFileName.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $TextBoxOutPutFileName.Text     = "Output"
 
-
+$TextBoxOutPutFileName.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
 
 ##########################
 #   TextBox Choice Deli  #
@@ -102,6 +107,8 @@ $TextChoiceDelimiter.Location = New-Object System.Drawing.Size(415,275)
 $TextChoiceDelimiter.Size     = New-Object System.Drawing.Size(15,20)
 #L'entrée du champ de text
 $TextChoiceDelimiter.Text     = ","
+
+$TextChoiceDelimiter.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSingle
 
 $TextChoiceDelimiter.MaxLength = 1
 
@@ -231,6 +238,7 @@ $DelimiterAlert.Text            = "Délimiter Incorrect"
 $DelimiterAlert.ForeColor       = "red"
 
 $DelimiterAlert.Font      = "Cascadia Code, 14"
+
 ###############################################################
 #                            RadioButton                      #
 ###############################################################
@@ -656,5 +664,6 @@ $RadioButtonDefaultDelimiter
 $RadioButtonChoiceDelimiter
 ))
 # Affiche/Cache les fenêtre
+$DelimiterAlert.Visible = $false
 ModuleMissing_Invisible
 $main_form.ShowDialog()
