@@ -1,4 +1,22 @@
-﻿##############################################################################################################################
+﻿<#
+
+.SYNOPSIS
+
+Convertiseur de format de tableau.
+
+.DESCRIPTION
+
+Convertisseur de format de tableau.
+Converti plusieurs types de fichier avec une spécification du délimiter.
+
+.LINK
+
+https://github.com/Bouly/Table-Format-Converter
+
+#>
+
+
+##############################################################################################################################
 #                                                       Chargement des classe                                                #
 ##############################################################################################################################
 # Chargement des classe l'interface GUI
@@ -49,9 +67,9 @@ $main_form.Height           = 400
 # Étire automatiquement la fenêtre
 $main_form.AutoSize         = $true
 # Couleur du fond
-$main_form.BackColor        = "gray"
+$main_form.BackColor        = '38,36,49'
 # Icon du GUI
-$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon("$CurrentPath\refresh.ico")
+#$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon("$CurrentPath\refresh.ico")
 # Bloque la taille max et min
 $main_form.minimumSize      = New-Object System.Drawing.Size(585,365)
 $main_form.maximumSize      = New-Object System.Drawing.Size(585,365)
@@ -70,6 +88,8 @@ $TextBoxOutPutFileName.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $TextBoxOutPutFileName.Text     = "Output"
 
+
+
 ##########################
 #   TextBox Choice Deli  #
 ##########################
@@ -77,11 +97,14 @@ $TextBoxOutPutFileName.Text     = "Output"
 #Création du champ de text pour le nom du fichier
 $TextChoiceDelimiter         = New-Object System.windows.Forms.TextBox
 #Location du champ de text
-$TextChoiceDelimiter.Location = New-Object System.Drawing.Size(400,278)
+$TextChoiceDelimiter.Location = New-Object System.Drawing.Size(415,275)
 #Taille du champ de text
-$TextChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
+$TextChoiceDelimiter.Size     = New-Object System.Drawing.Size(15,20)
 #L'entrée du champ de text
 $TextChoiceDelimiter.Text     = ","
+
+$TextChoiceDelimiter.MaxLength = 1
+
 #Cacher la TextBox
 $TextChoiceDelimiter.Visible  = $false
 ###############################################################
@@ -97,9 +120,13 @@ $LabelDelimiter.Location  = New-Object System.Drawing.Size(305,220)
 #Taille du label
 $LabelDelimiter.Size      = New-Object System.Drawing.Size(200,20)
 #Text du Label
-$LabelDelimiter.Text      = "Delimiter Par défault: " + '"' + $Delimiter + '"'
+$LabelDelimiter.Text      = "Délimiter Par défault: " + '" ' + $Delimiter + ' "'
+
+$LabelDelimiter.Font      = "Bahnschrift, 10"
+
 #Couleur du Label
-$LabelDelimiter.ForeColor = "Black"
+$LabelDelimiter.ForeColor = "243, 244, 247"
+
 ##########################
 #   Label Module Check   #
 ##########################
@@ -119,35 +146,46 @@ $LabelModuleCheck.ForeColor = "Red"
 #Création du label pour le nom du fichier
 $LabelOutputName           = New-Object System.Windows.Forms.Label
 #Location du label
-$LabelOutputName.Location  = New-Object System.Drawing.Size(390,20)
+$LabelOutputName.Location  = New-Object System.Drawing.Size(386,20)
 #Taille du label
-$LabelOutputName.Size      = New-Object System.Drawing.Size(137,20)
+$LabelOutputName.Size      = New-Object System.Drawing.Size(167,20)
 #Text du Label
-$LabelOutputName.Text      = "Nom du fichier de sortie"
+$LabelOutputName.Text      = "Nom du fichier"
+
+$LabelOutputName.Font      = [System.Drawing.Font]::new("Verdana", 12)
+
+$LabelOutputName.ForeColor = "243, 244, 247"
 ##########################
 #   Label Input format   #
 ##########################
 #Création du label pour le format d'entrée
 $LabelFormatInput           = New-Object System.Windows.Forms.Label
 #Location du label
-$LabelFormatInput.Location  = New-Object System.Drawing.Size(10,20)
+$LabelFormatInput.Location  = New-Object System.Drawing.Size(6,20)
 #Taille du label
-$LabelFormatInput.Size      = New-Object System.Drawing.Size(100,20)
+$LabelFormatInput.Size      = New-Object System.Drawing.Size(150,20)
 #Text du Label
 $LabelFormatInput.Text      = "Format d'entrée"
+
+$LabelFormatInput.Font      = [System.Drawing.Font]::new("Verdana", 12)
+
+$LabelFormatInput.ForeColor = "243, 244, 247"
 ##########################
 #   Label Output format  #
 ##########################
 #Création du label pour le format de sortie
 $LabelFormatOutput          = New-Object System.Windows.Forms.Label
 #Location du label
-$LabelFormatOutput.Location = New-Object System.Drawing.Size(200,20)
+$LabelFormatOutput.Location = New-Object System.Drawing.Size(196,20)
 #Taille du label
-$LabelFormatOutput.Size     = New-Object System.Drawing.Size(100,20)
+$LabelFormatOutput.Size     = New-Object System.Drawing.Size(150,20)
 #Text du label
 $LabelFormatOutput.Text     = "Format de sortie"
+
+$LabelFormatOutput.Font      = [System.Drawing.Font]::new("Verdana", 12)
+
 #Couleur du text
-$LabelFormatOutput.ForeColor= "black"
+$LabelFormatOutput.ForeColor= "243, 244, 247"
 ##########################
 #    Label Info Input    #
 ##########################
@@ -160,7 +198,9 @@ $LabelInfo.Size             = New-Object System.Drawing.Size(192,20)
 #Text du label
 $LabelInfo.Text             = "Chemin d'entrée non spécifié"
 #Couleur du text
-$LabelInfo.ForeColor        = "black"
+$LabelInfo.ForeColor        = "243, 244, 247"
+
+$LabelInfo.Font      = "Bahnschrift, 10"
 ##########################
 #    Label Info Output   #
 ##########################
@@ -173,7 +213,24 @@ $LabelInfo2.Size            = New-Object System.Drawing.Size(193,20)
 #Text du label
 $LabelInfo2.Text            = "Chemin de sorti non spécifié"
 #Couleur du text
-$LabelInfo2.ForeColor       = "black"
+$LabelInfo2.ForeColor       = "243, 244, 247"
+
+$LabelInfo2.Font      = "Bahnschrift, 10"
+##########################
+#  Label Delimiter Alert #
+##########################
+#Création du label pour informé l'état du délimiter
+$DelimiterAlert                 = New-Object System.Windows.Forms.Label
+#Location du label
+$DelimiterAlert.Location        = New-Object System.Drawing.Size(325, 180)
+#Taille du label
+$DelimiterAlert.Size            = New-Object System.Drawing.Size(300,20)
+#Text du label
+$DelimiterAlert.Text            = "Délimiter Incorrect"
+#Couleur du text
+$DelimiterAlert.ForeColor       = "red"
+
+$DelimiterAlert.Font      = "Cascadia Code, 14"
 ###############################################################
 #                            RadioButton                      #
 ###############################################################
@@ -188,8 +245,16 @@ $RadioButtonDefaultDelimiter.Location = New-Object System.Drawing.Size(290,240)
 $RadioButtonDefaultDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $RadioButtonDefaultDelimiter.Text     = "Default Delimiter"
+
+$RadioButtonDefaultDelimiter.Font      = "Bahnschrift, 10"
+
+$RadioButtonDefaultDelimiter.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
 #Activer par défault
 $RadioButtonDefaultDelimiter.Checked = $true
+
+$RadioButtonDefaultDelimiter.ForeColor       = "243, 244, 247"
+
 # Event Click
 $RadioButtonDefaultDelimiter.Add_Click({ #Quand le button est cliqué
     DefaultDelimiter #Function d'affichage
@@ -198,13 +263,20 @@ $RadioButtonDefaultDelimiter.Add_Click({ #Quand le button est cliqué
 #RadioButton Choice Deli #
 ##########################
 #Création du Radio Button pour choisir le délimité à choix
-$RadioButtonChoiceDelimiter       = New-Object System.Windows.Forms.RadioButton
+$RadioButtonChoiceDelimiter          = New-Object System.Windows.Forms.RadioButton
 #Location du champ de text
 $RadioButtonChoiceDelimiter.Location = New-Object System.Drawing.Size(290,280)
 #Taille du champ de text
 $RadioButtonChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
 $RadioButtonChoiceDelimiter.Text     = "Choice Delimiter"
+
+$RadioButtonChoiceDelimiter.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
+$RadioButtonChoiceDelimiter.Font      = "Bahnschrift, 10"
+
+$RadioButtonChoiceDelimiter.ForeColor= "243, 244, 247"
+
 # Event Click
 $RadioButtonChoiceDelimiter.Add_Click({ #Quand le button cliqué
         ChoiceDelimiter #Function d'affichage
@@ -223,6 +295,13 @@ $ButtonInstallModule.Location    = New-Object System.Drawing.Size(390,100)
 $ButtonInstallModule.Size        = New-Object System.Drawing.Size(75,23)
 #Text du button
 $ButtonInstallModule.Text        = "Install"
+
+$ButtonInstallModule.BackColor = "153, 152, 246"
+
+$ButtonInstallModule.Font      = "Bahnschrift, 10"
+
+$ButtonInstallModule.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
 # Event click
 $ButtonInstallModule.Add_Click({ #Quand le button cliqué
     Install-Module ImportExcel -AllowClobber -Force # Installation du module ImportExcel -AllowClobber(Persmission) -Force(Focer l'installation)
@@ -240,6 +319,14 @@ $ButtonLocation.Location    = New-Object System.Drawing.Size(10,100)
 $ButtonLocation.Size        = New-Object System.Drawing.Size(75,23)
 #Text du button
 $ButtonLocation.Text        = "Location"
+
+$ButtonLocation.Font      = "Bahnschrift, 10"
+
+$ButtonLocation.BackColor = "153, 152, 246"
+
+$ButtonLocation.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
+$ButtonLocation.ForeColor = "243, 244, 247"
 #Création du dialogue pour la séléction du chemin
 $FilePath                   = New-Object System.Windows.Forms.OpenFileDialog
 # Event click
@@ -248,7 +335,7 @@ $ButtonLocation.Add_Click({ #Quand le button cliqué
     if ($FilePath.FileName -eq $FilePath.FileName) # Si le chemin = le chemin alors
     {
         $LabelInfo.Text = $FilePath.FileName # Le label d'information de l'état du chemin = Le chemin choisi
-        $LabelInfo.ForeColor = "green" # Couleur du text du label d'information de l'état du chemin en "vert"
+        $LabelInfo.ForeColor = "153, 152, 246" # Couleur du text du label d'information de l'état du chemin en "vert"
     }   
 })
 ##########################
@@ -262,6 +349,15 @@ $ButtonLocation2.Location   = New-Object System.Drawing.Size(200,100)
 $ButtonLocation2.Size       = New-Object System.Drawing.Size(75,23)
 #Text du button
 $ButtonLocation2.Text       = "Location"
+
+$ButtonLocation2.Font      = "Bahnschrift, 10"
+
+$ButtonLocation2.BackColor = "153, 152, 246"
+
+$ButtonLocation2.ForeColor = "243, 244, 247"
+
+$ButtonLocation2.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
 #Création du dialogue pour la séléction du chemin
 $FolderPath = New-Object System.Windows.Forms.FolderBrowserDialog
 ### Event click ###
@@ -270,7 +366,7 @@ $ButtonLocation2.Add_Click({
     if ($FolderPath.SelectedPath -eq $FolderPath.SelectedPath) # Si le chemin = le chemin alors
     {
         $LabelInfo2.Text = $FolderPath.SelectedPath # Le label d'information de l'état du chemin = Le chemin choisi
-        $LabelInfo2.ForeColor = "green" # Couleur du text du label d'information de l'état du chemin en "vert"
+        $LabelInfo2.ForeColor = "153, 152, 246" # Couleur du text du label d'information de l'état du chemin en "vert"
     }   
 })
 ##########################
@@ -284,6 +380,15 @@ $OKButton.Location     = New-Object System.Drawing.Size(10,180)
 $OKButton.Size         = New-Object System.Drawing.Size(75,23)
 #Text du button
 $OKButton.Text         = "Convertir"
+
+$OKButton.Font      = "Bahnschrift, 10"
+
+$OKButton.BackColor = "153, 152, 246"
+
+$OKButton.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
+$OKButton.ForeColor = "243, 244, 247"
+
 ### Event click ###
 $OKButton.Add_Click({
 ############################
@@ -339,7 +444,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
 #Debug verification si l'extension du fichier corrrespond au format d'entrée séléctionné
     if($FileExtension.Extension -like $SelectedInput)
         {
-            $LabelFormatInput.ForeColor = "Green" # Changement de couleur pour le text du format d'entrée
+            $LabelFormatInput.ForeColor = "153, 152, 246" # Changement de couleur pour le text du format d'entrée
             $OutputFileName = $TextBoxOutPutFileName.Text # On stock le nom entrée dans la text box dans $OutputFileName
             $Destionation = $FolderPath.SelectedPath # On stock le chemin séléctionné dans la variable $Destination
 #####
@@ -490,6 +595,9 @@ $ComboboxTypeInput.Location = New-Object System.Drawing.Size(10,40)
 $ComboboxTypeInput.Size     = New-Object System.Drawing.Size(120,20)
 #Taille de l'onglet
 $ComboboxTypeInput.Height   = 70
+
+$ComboboxTypeInput.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
 #Ajout des item dans la combobox
 $ComboboxTypeInput.Items.Add(".csv") #[void] $ComboboxTypeInput.Items.Add("csv")
 $ComboboxTypeInput.Items.Add(".json")
@@ -506,6 +614,9 @@ $ComboboxTypeOutput          = New-Object System.Windows.Forms.Combobox
 $ComboboxTypeOutput.Location = New-Object System.Drawing.Size(200,40)
 #Taille de la combobox
 $ComboboxTypeOutput.Size     = New-Object System.Drawing.Size(120,20)
+
+$ComboboxTypeOutput.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+
 #Taille de l'onglet
 $ComboboxTypeOutput.Height   = 70
 #Ajout des item dans la combobox
@@ -531,6 +642,7 @@ $LabelInfo
 $LabelInfo2
 $LabelModuleCheck
 $LabelDelimiter
+$DelimiterAlert
 #Button
 $OKButton
 $ButtonLocation
