@@ -28,6 +28,7 @@ Add-Type -AssemblyName System.Drawing
 
 $CurrentPath = Get-Location # Stock le chemin courant dans une variable
 $Delimiter = (Get-Culture).Textinfo.ListSeparator # Le délimiter = au délimiter de base du PC
+$EncodingType = 'UTF8'
 
 #Function d'affichage
 function ModuleMissing_Visible { # Fonction qui rend visible les tools défini
@@ -42,12 +43,13 @@ function ModuleMissing_Invisible { # Fonction qui rend invisible les tools défi
 
 function DefaultDelimiter{ # Fonction qui rend visible les tools défini
     $TextChoiceDelimiter.Visible = $false
-    $LabelDelimiter.Visible = $true
+    $LabelDelimiter.Visible = $false
+    
 }
 
 function ChoiceDelimiter{ # Fonction qui rend visible les tools défini
     $TextChoiceDelimiter.Visible = $true
-    $LabelDelimiter.Visible = $false
+    $LabelDelimiter.Visible = $true
     }
 
 function YouCant{
@@ -80,6 +82,22 @@ $main_form.maximumSize      = New-Object System.Drawing.Size(585,365)
 ##############################################################################################
 #                                              Toolbox                                       #
 ##############################################################################################
+
+$RadioEncodageGroup = New-Object System.Windows.Forms.GroupBox
+$RadioEncodageGroup.Location = '150,200'
+$RadioEncodageGroup.size = '100,110'
+$RadioEncodageGroup.text = "Encodage"
+$RadioEncodageGroup.ForeColor = "white"
+$RadioEncodageGroup.Font      = "Bahnschrift, 10"
+
+$RadioDelimiterGroup = New-Object System.Windows.Forms.GroupBox
+$RadioDelimiterGroup.Location = '300,200'
+$RadioDelimiterGroup.size = '250,110'
+$RadioDelimiterGroup.text = "Délimiter Par défault: " + '" ' + $Delimiter + ' "'
+$RadioDelimiterGroup.ForeColor = "white"
+$RadioDelimiterGroup.Font      = "Bahnschrift, 10"
+
+
 ###############################################################
 #                            TextBox                          #
 ###############################################################
@@ -99,7 +117,7 @@ $TextBoxOutPutFileName.BorderStyle = [System.Windows.Forms.BorderStyle]::FixedSi
 #Création du champ de text pour le nom du fichier
 $TextChoiceDelimiter         = New-Object System.windows.Forms.TextBox
 #Location du champ de text
-$TextChoiceDelimiter.Location = New-Object System.Drawing.Size(415,275)
+$TextChoiceDelimiter.Location = New-Object System.Drawing.Size(170,55)
 #Taille du champ de text
 $TextChoiceDelimiter.Size     = New-Object System.Drawing.Size(15,20)
 #L'entrée du champ de text
@@ -119,11 +137,11 @@ $TextChoiceDelimiter.Visible  = $false
 #Création du label pour le nom du fichier
 $LabelDelimiter           = New-Object System.Windows.Forms.Label
 #Location du label
-$LabelDelimiter.Location  = New-Object System.Drawing.Size(305,220)
+$LabelDelimiter.Location  = New-Object System.Drawing.Size(10,60)
 #Taille du label
 $LabelDelimiter.Size      = New-Object System.Drawing.Size(200,20)
 #Text du Label
-$LabelDelimiter.Text      = "Délimiter Par défault: " + '" ' + $Delimiter + ' "'
+$LabelDelimiter.Text      = "Entrée un délimiter valide"
 #Police et taille du text du label
 $LabelDelimiter.Font      = "Bahnschrift, 10"
 #Couleur du Label
@@ -240,7 +258,7 @@ $DelimiterAlert.Font      = "Cascadia Code, 14"
 #Création du Radio Button pour choisir le délimiter par défaut
 $RadioButtonDefaultDelimiter       = New-Object System.Windows.Forms.RadioButton
 #Location du champ de text
-$RadioButtonDefaultDelimiter.Location = New-Object System.Drawing.Size(290,240)
+$RadioButtonDefaultDelimiter.Location = New-Object System.Drawing.Size(10,20)
 #Taille du champ de text
 $RadioButtonDefaultDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
@@ -263,7 +281,7 @@ $RadioButtonDefaultDelimiter.Add_Click({ #Quand le button est cliqué
 #Création du Radio Button pour choisir le délimité à choix
 $RadioButtonChoiceDelimiter          = New-Object System.Windows.Forms.RadioButton
 #Location du champ de text
-$RadioButtonChoiceDelimiter.Location = New-Object System.Drawing.Size(290,280)
+$RadioButtonChoiceDelimiter.Location = New-Object System.Drawing.Size(10,40)
 #Taille du champ de text
 $RadioButtonChoiceDelimiter.Size     = New-Object System.Drawing.Size(137,20)
 #L'entrée du champ de text
@@ -278,6 +296,78 @@ $RadioButtonChoiceDelimiter.ForeColor= "243, 244, 247"
 $RadioButtonChoiceDelimiter.Add_Click({ #Quand le button cliqué
         ChoiceDelimiter #Function d'affichage
 })
+###
+
+##########################
+#    RadioButton UTF8    #
+##########################
+#Création du Radio Button pour choisir le délimiter par défaut
+$RadioButtonUTF8       = New-Object System.Windows.Forms.RadioButton
+#Location du champ de text
+$RadioButtonUTF8.Location = New-Object System.Drawing.Size(10,20)
+#Taille du champ de text
+$RadioButtonUTF8.Size     = New-Object System.Drawing.Size(60,20)
+#L'entrée du champ de text
+$RadioButtonUTF8.Text     = "UTF8"
+#Police et taille du radio button
+$RadioButtonUTF8.Font      = "Bahnschrift, 10"
+#Design du radio button
+$RadioButtonUTF8.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+#Activer par défault
+$RadioButtonUTF8.Checked = $true
+#Couleur du radio button
+$RadioButtonUTF8.ForeColor       = "243, 244, 247"
+# Event Click
+$RadioButtonUTF8.Add_Click({ #Quand le button est cliqué
+    #$EncodingType = 'utf8'
+})
+##########################
+#  RadioButton UTF8BOM   #
+##########################
+#Création du Radio Button pour choisir le délimité à choix
+$RadioButtonUTF8BOM          = New-Object System.Windows.Forms.RadioButton
+#Location du champ de text
+$RadioButtonUTF8BOM.Location = New-Object System.Drawing.Size(10,40)
+#Taille du champ de text
+$RadioButtonUTF8BOM.Size     = New-Object System.Drawing.Size(88,20)
+
+$RadioButtonUTF8BOM.Gr
+
+#L'entrée du champ de text
+$RadioButtonUTF8BOM.Text     = "UTF8-BOM"
+#Design du radio button
+$RadioButtonUTF8BOM.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+#Police et taille du text
+$RadioButtonUTF8BOM.Font      = "Bahnschrift, 10"
+#Couleur du text
+$RadioButtonUTF8BOM.ForeColor= "243, 244, 247"
+# Event Click
+$RadioButtonUTF8BOM.Add_Click({ #Quand le button cliqué
+    #$EncodingType = 'utf8BOM'
+})
+
+##########################
+#  RadioButton ANSI      #
+##########################
+#Création du Radio Button pour choisir le délimité à choix
+$RadioButtonANSI          = New-Object System.Windows.Forms.RadioButton
+#Location du champ de text
+$RadioButtonANSI.Location = New-Object System.Drawing.Size(10,60)
+#Taille du champ de text
+$RadioButtonANSI.Size     = New-Object System.Drawing.Size(80,20)
+#L'entrée du champ de text
+$RadioButtonANSI.Text     = "ANSI"
+#Design du radio button
+$RadioButtonANSI.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
+#Police et taille du text
+$RadioButtonANSI.Font      = "Bahnschrift, 10"
+#Couleur du text
+$RadioButtonANSI.ForeColor= "243, 244, 247"
+# Event Click
+$RadioButtonANSI.Add_Click({ #Quand le button cliqué
+    #$EncodingType = 'ANSI'
+})
+
 ###############################################################
 #                            Button                           #
 ###############################################################
@@ -396,6 +486,20 @@ else
 { # Sinon
     $ModuleCheck = "false"
 }
+
+if ($RadioButtonUTF8.Checked -eq $true)
+{
+    $EncodingType = 'utf8'
+}
+elseif ($RadioButtonUTF8BOM.Checked -eq $true) 
+{
+    $EncodingType = 'utf8BOM'
+}
+elseif ($RadioButtonANSI -eq $true) 
+{
+    $EncodingType = 'ANSI'
+}
+
 #############
 # Delimiter #
 #############
@@ -415,8 +519,10 @@ $script:x += $ComboboxTypeOutput.SelectedItem # Pour qu'un seul item soit sélé
 #######
 #Input#
 #######
+
 $SelectedInput = $ComboboxTypeInput.SelectedItem # On stock l'option séléctionné pour le format de sortie dans une variable
 $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléctionné
+
 #Debug verification si le chemin d'entrée est vide
     if($FilePath.FileName -eq "")
     {
@@ -441,22 +547,24 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             $LabelFormatInput.ForeColor = "153, 152, 246" # Changement de couleur pour le text du format d'entrée
             $OutputFileName = $TextBoxOutPutFileName.Text # On stock le nom entrée dans la text box dans $OutputFileName
             $Destionation = $FolderPath.SelectedPath # On stock le chemin séléctionné dans la variable $Destination
+
 #####
 #CSV#
 #####
             if ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".csv") # Si la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Add-Content -Path "$Destionation\$OutputFileName.json"
+                #import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Add-Content -Path = "$Destionation\$OutputFileName.json"
+                import-csv -Delimiter "$Delimiter" $FilePath.FileName | ConvertTo-Json | Out-File -Path  "$Destionation\$OutputFileName.json"
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml" 
+                import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Clixml -Encoding $EncodingType "$Destionation\$OutputFileName.xml" 
             }
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".csv") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
-                import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
+                import-csv -Delimiter "$Delimiter" $FilePath.FileName | Export-Excel -Encoding $EncodingType "$Destionation\$OutputFileName.xlsx"
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -472,13 +580,13 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml "$Destionation\$OutputFileName.xml" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml -Encoding $EncodingType "$Destionation\$OutputFileName.xml" 
             }
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
-                    Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel "$Destionation\$OutputFileName.xlsx"  
+                    Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel -Encoding $EncodingType "$Destionation\$OutputFileName.xlsx"  
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -501,7 +609,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
-                Import-Clixml $FilePath.FileName | Export-Excel "$Destionation\$OutputFileName.xlsx"
+                Import-Clixml $FilePath.FileName | Export-Excel -Encoding $EncodingType "$Destionation\$OutputFileName.xlsx"
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -537,7 +645,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
-                Import-Excel $FilePath.FileName | Export-Clixml "$Destionation\$OutputFileName.xml"
+                Import-Excel $FilePath.FileName | Export-Clixml -Encoding $EncodingType "$Destionation\$OutputFileName.xml"
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -626,10 +734,27 @@ $ComboboxTypeOutput.SelectedIndex = 1
 #                                              Control ToolBox                               #
 ##############################################################################################
 # Déclare les variables du ToolBox pour les afficher
+
+
+
+$RadioDelimiterGroup.Controls.AddRange(@(
+$RadioButtonDefaultDelimiter
+$RadioButtonChoiceDelimiter
+$TextChoiceDelimiter
+$LabelDelimiter
+))
+
+$RadioEncodageGroup.Controls.AddRange(@(
+#$RadioButtonANSI
+$RadioButtonUTF8
+$RadioButtonUTF8BOM
+))
+
 $main_form.controls.AddRange(@(
+$RadioDelimiterGroup
+$RadioEncodageGroup
 #TextBox
 $TextBoxOutPutFileName
-$TextChoiceDelimiter
 #Label
 $LabelOutputName
 $LabelFormatInput
@@ -637,7 +762,6 @@ $LabelFormatOutput
 $LabelInfo
 $LabelInfo2
 $LabelModuleCheck
-$LabelDelimiter
 $DelimiterAlert
 #Button
 $OKButton
@@ -647,9 +771,6 @@ $ButtonInstallModule
 #Combobox
 $ComboboxTypeInput
 $ComboboxTypeOutput
-#RadioButton
-$RadioButtonDefaultDelimiter
-$RadioButtonChoiceDelimiter
 ))
 # Affiche/Cache les fenêtre
 $DelimiterAlert.Visible = $false
