@@ -6,7 +6,7 @@ Convertiseur de format de tableau.
 
 .DESCRIPTION
 
-Convertisseur de format de tableau.
+Convertisseur de format de tableau en Powershell et Windows Form.
 Converti plusieurs types de fichier avec une spécification du délimiter.
 
 .LINK
