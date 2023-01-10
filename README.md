@@ -1,6 +1,6 @@
 # Table-Format-Converter
 ## What's this ?
-A small ps1 script to convert table files to different format
+A small PowerShell script to convert table files to different format
 ## Why should I use it ?
 <strong>Because its</strong> ⬇️
 + More easier and faster
