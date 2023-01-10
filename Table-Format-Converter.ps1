@@ -73,7 +73,7 @@ $main_form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
 # Couleur du fond
 $main_form.BackColor        = '38,36,49'
 # Icon du GUI
-#$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon("$CurrentPath\refresh.ico")
+$main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon("$CurrentPath\logo.ico")
 # Bloque la taille max et min
 $main_form.minimumSize      = New-Object System.Drawing.Size(585,365)
 $main_form.maximumSize      = New-Object System.Drawing.Size(585,365)
@@ -609,7 +609,7 @@ $ComboboxTypeOutput          = New-Object System.Windows.Forms.Combobox
 $ComboboxTypeOutput.Location = New-Object System.Drawing.Size(200,40)
 #Taille de la combobox
 $ComboboxTypeOutput.Size     = New-Object System.Drawing.Size(120,20)
-
+#Design Style
 $ComboboxTypeOutput.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 # Read Only la combobox
 $ComboboxTypeOutput.DropDownStyle = [System.Windows.Forms.ComboBoxStyle]::DropDownList
