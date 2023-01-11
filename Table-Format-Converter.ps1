@@ -356,7 +356,7 @@ $RadioButtonANSI.Location = New-Object System.Drawing.Size(10,60)
 #Taille du champ de text
 $RadioButtonANSI.Size     = New-Object System.Drawing.Size(80,20)
 #L'entrée du champ de text
-$RadioButtonANSI.Text     = "ANSI"
+$RadioButtonANSI.Text     = "ASCII"
 #Design du radio button
 $RadioButtonANSI.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Police et taille du text
@@ -463,7 +463,7 @@ $LabelDelimiter
 ))
 
 $RadioEncodageGroup.Controls.AddRange(@(
-#$RadioButtonANSI
+$RadioButtonANSI
 $RadioButtonUTF8
 $RadioButtonUTF8BOM
 ))
@@ -509,10 +509,10 @@ elseif ($RadioButtonUTF8BOM.Checked -eq $true)
 {
     $EncodingType = 'utf8BOM'
 }
-#elseif ($RadioButtonANSI -eq $true) 
-#{
-#    $EncodingType = 'ANSI'
-#}
+else
+{
+    $EncodingType = 'ASCII'
+}
 
 #############
 # Delimiter #
