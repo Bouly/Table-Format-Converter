@@ -590,17 +590,17 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
 ######
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter "$Delimiter" | Out-File "$Destionation\$OutputFileName.csv" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | ConvertTo-Csv -Delimiter "$Delimiter" | Out-File -Encoding $EncodingType -Path "$Destionation\$OutputFileName.csv" 
             }
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml -Encoding $EncodingType "$Destionation\$OutputFileName.xml" 
+                Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Clixml -Delimiter "$Delimiter" -Encoding $EncodingType "$Destionation\$OutputFileName.xml" 
             }
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".json") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
-                    Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel -Encoding $EncodingType "$Destionation\$OutputFileName.xlsx"  
+                    Get-Content $FilePath.FileName | ConvertFrom-Json | Export-Excel -Delimiter "$Delimiter" -Encoding $EncodingType "$Destionation\$OutputFileName.xlsx"  
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -613,17 +613,17 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
 #####
             elseif ($SelectedOutput -eq ".csv" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Path "$Destionation\$OutputFileName.csv" 
+                Import-Clixml $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Encoding $EncodingType -Path "$Destionation\$OutputFileName.csv" 
             }
             elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
-                Import-Clixml $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\$OutputFileName.json" 
+                Import-Clixml $FilePath.FileName | ConvertTo-Json | Out-File -Delimiter "$Delimiter" -Encoding $EncodingType "$Destionation\$OutputFileName.json" 
             }
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".y" et l'entrée = ".x" alors on convertit de la facon adéquate
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
-                Import-Clixml $FilePath.FileName | Export-Excel -Encoding $EncodingType "$Destionation\$OutputFileName.xlsx"
+                Import-Clixml $FilePath.FileName | Export-Excel -Delimiter "$Delimiter" -Encoding $EncodingType "$Destionation\$OutputFileName.xlsx"
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -637,7 +637,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors
                 {
-                Import-Excel $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Path "$Destionation\$OutputFileName.csv"
+                Import-Excel $FilePath.FileName | ConvertTo-Csv -Delimiter "$Delimiter" | Add-Content -Encoding $EncodingType -Path "$Destionation\$OutputFileName.csv"
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -648,7 +648,8 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors
                 {
-                    Import-Excel $FilePath.FileName | ConvertTo-Json | Out-File "$Destionation\$OutputFileName.json"
+                    Import-Excel $FilePath.FileName | ConvertTo-Json | Out-File -Encoding $EncodingType "$Destionation\$OutputFileName.json"
+                    #Import-Excel $FilePath.FileName | ConvertTo-Json | Out-File -Delimiter "$Delimiter" -Encoding $EncodingType "$Destionation\$OutputFileName.json"
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
@@ -659,7 +660,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             {
                 If ($ModuleCheck -eq "true") # Si le module est présent alors 
                 {
-                Import-Excel $FilePath.FileName | Export-Clixml -Encoding $EncodingType "$Destionation\$OutputFileName.xml"
+                Import-Excel $FilePath.FileName | Export-Clixml -Delimiter "$Delimiter" -Encoding $EncodingType "$Destionation\$OutputFileName.xml"
                 }
                 elseif ($ModuleCheck -eq "false") # Sinon
                 {
