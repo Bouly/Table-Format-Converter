@@ -454,6 +454,20 @@ $ButtonLocation2.Add_Click({
         $LabelInfo2.ForeColor = "153, 152, 246" # Couleur du text du label d'information de l'état du chemin en "vert"
     }   
 })
+
+$RadioDelimiterGroup.Controls.AddRange(@(
+$RadioButtonDefaultDelimiter
+$RadioButtonChoiceDelimiter
+$TextChoiceDelimiter
+$LabelDelimiter
+))
+
+$RadioEncodageGroup.Controls.AddRange(@(
+#$RadioButtonANSI
+$RadioButtonUTF8
+$RadioButtonUTF8BOM
+))
+
 ##########################
 #    Button Conversion   #
 ##########################
@@ -495,10 +509,10 @@ elseif ($RadioButtonUTF8BOM.Checked -eq $true)
 {
     $EncodingType = 'utf8BOM'
 }
-elseif ($RadioButtonANSI -eq $true) 
-{
-    $EncodingType = 'ANSI'
-}
+#elseif ($RadioButtonANSI -eq $true) 
+#{
+#    $EncodingType = 'ANSI'
+#}
 
 #############
 # Delimiter #
@@ -737,18 +751,7 @@ $ComboboxTypeOutput.SelectedIndex = 1
 
 
 
-$RadioDelimiterGroup.Controls.AddRange(@(
-$RadioButtonDefaultDelimiter
-$RadioButtonChoiceDelimiter
-$TextChoiceDelimiter
-$LabelDelimiter
-))
 
-$RadioEncodageGroup.Controls.AddRange(@(
-#$RadioButtonANSI
-$RadioButtonUTF8
-$RadioButtonUTF8BOM
-))
 
 $main_form.controls.AddRange(@(
 $RadioDelimiterGroup
