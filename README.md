@@ -15,6 +15,5 @@ Just download and extract the folder and run the Powershell script, you can also
 + Verifier si un fichier a deja le meme nom --> popup error
 + Detecter automatiquement le délimiter du fichier input
 + Message informatif qui indique que le délimiter choisi ne conrespond pas au délimiter du fichier input
-+ Pourvoir changer l'encodage du fichier
 + Changer le style des popup erreur/information
 
