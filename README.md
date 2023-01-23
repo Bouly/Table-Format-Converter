@@ -1,11 +1,6 @@
 # Table-Format-Converter
 ## What's this ?
 A small PowerShell script to convert table files to different format
-## Why should I use it ?
-<strong>Because its</strong> ⬇️
-+ More easier and faster
-+ More intuitive
-+ Have more feature
 ## How to use it ?
 Just download and extract the folder and run the Powershell script, you can also use the files in .\ConverterBaseFormat to test the script
 ## Format
