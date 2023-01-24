@@ -229,7 +229,7 @@ $LabelInfo2.Location        = New-Object System.Drawing.Size(200, 80)
 #Taille du label
 $LabelInfo2.Size            = New-Object System.Drawing.Size(193,20)
 #Text du label
-$LabelInfo2.Text            = "Chemin de sorti non spécifié"
+$LabelInfo2.Text            = "Chemin de sortie non spécifié"
 #Couleur du text
 $LabelInfo2.ForeColor       = "243, 244, 247"
 #Police et taille du label
