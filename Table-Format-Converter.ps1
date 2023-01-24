@@ -73,7 +73,7 @@ $main_form.StartPosition= 'CenterScreen'
 # Design de la fênetre
 $main_form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
 # Couleur du fond
-$main_form.BackColor        = '204,102,103'
+$main_form.BackColor        = '192,192,192' 
 # Icon du GUI
 $main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon("$CurrentPath\logo.ico")
 # Bloque la taille max et min
