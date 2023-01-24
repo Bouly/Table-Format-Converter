@@ -389,8 +389,8 @@ $ButtonInstallModule.Font      = "Bahnschrift, 10"
 #Design Style
 $ButtonInstallModule.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 # Event click
-$ButtonInstallModule.Add_Click({ #Quand le button cliqué
-    Install-Module ImportExcel -AllowClobber -Force # Installation du module ImportExcel -AllowClobber(Persmission) -Force(Focer l'installation)
+$ButtonInstallModule.Add_Click({ #Quand le button cliqué)
+    Install-Module ImportExcel -AllowClobber -Force -Confirm:$false # Installation du module ImportExcel -AllowClobber(Persmission) -Force(Focer l'installation)
     [System.Windows.Forms.MessageBox]::Show("Le module ImportExcel a bien était Installé",'Module installé','Ok','Information') #Message informatif
     ModuleMissing_Invisible # Cacher la partie Installation du module
 })
