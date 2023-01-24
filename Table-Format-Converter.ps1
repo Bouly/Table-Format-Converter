@@ -750,10 +750,6 @@ $ComboboxTypeOutput.SelectedIndex = 1
 ##############################################################################################
 # Déclare les variables du ToolBox pour les afficher
 
-
-
-
-
 $main_form.controls.AddRange(@(
 $RadioDelimiterGroup
 $RadioEncodageGroup
