@@ -675,7 +675,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
                 YouCant # Message d'erreur
                 $ComboboxTypeOutput.SelectedIndex = 1
                 
-            }  
+            }
             elseif ($SelectedOutput -eq ".json" -And $SelectedInput -eq ".json") #Sinon la sortie = ".x" et entrée = ".x"
             {
                 YouCant # Message d'erreur
@@ -683,7 +683,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             elseif ($SelectedOutput -eq ".xml" -And $SelectedInput -eq ".xml") #Sinon la sortie = ".x" et entrée = ".x"
             {
                 YouCant # Message d'erreur
-            }  
+            }
             elseif ($SelectedOutput -eq ".xlsx" -And $SelectedInput -eq ".xlsx") #Sinon la sortie = ".x" et entrée = ".x"
             {
                 YouCant # Message d'erreur
@@ -696,7 +696,7 @@ $script:x += $ComboboxTypeInput.SelectedItem # Pour qu'un seul item soit séléc
             $LabelFormatInput.ForeColor = "red" # Changement de couleur pour le text du format d'entrée
             [System.Windows.Forms.MessageBox]::Show("Format d'entrée non défini ou invalide",'Erreur','Ok','Error') # Message d'erreur
         }
-    }   
+    }
 })
 ###############################################################
 #                            Combobox                         #
