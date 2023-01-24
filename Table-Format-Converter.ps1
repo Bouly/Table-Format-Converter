@@ -73,7 +73,7 @@ $main_form.StartPosition= 'CenterScreen'
 # Design de la fênetre
 $main_form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedDialog
 # Couleur du fond
-$main_form.BackColor        = '192,192,192' 
+$main_form.BackColor        = '38,36,49' 
 # Icon du GUI
 $main_form.Icon             = [System.Drawing.Icon]::ExtractAssociatedIcon("$CurrentPath\logo.ico")
 # Bloque la taille max et min
@@ -87,14 +87,14 @@ $RadioEncodageGroup = New-Object System.Windows.Forms.GroupBox
 $RadioEncodageGroup.Location = '150,200'
 $RadioEncodageGroup.size = '100,110'
 $RadioEncodageGroup.text = "Encodage"
-$RadioEncodageGroup.ForeColor = "black"
+$RadioEncodageGroup.ForeColor = "white"
 $RadioEncodageGroup.Font      = "Bahnschrift, 10"
 
 $RadioDelimiterGroup = New-Object System.Windows.Forms.GroupBox
 $RadioDelimiterGroup.Location = '300,200'
 $RadioDelimiterGroup.size = '250,110'
 $RadioDelimiterGroup.text = "Délimiter Par défault: " + '" ' + $Delimiter + ' "'
-$RadioDelimiterGroup.ForeColor = "black"
+$RadioDelimiterGroup.ForeColor = "white"
 $RadioDelimiterGroup.Font      = "Bahnschrift, 10"
 
 
@@ -145,7 +145,7 @@ $LabelDelimiter.Text      = "Entrée un délimiter valide"
 #Police et taille du text du label
 $LabelDelimiter.Font      = "Bahnschrift, 10"
 #Couleur du Label
-$LabelDelimiter.ForeColor = "157, 181, 157"
+$LabelDelimiter.ForeColor = "243, 244, 247"
 ##########################
 #   Label Module Check   #
 ##########################
@@ -173,7 +173,7 @@ $LabelOutputName.Text      = "Nom du fichier"
 #Police et taille du text du label
 $LabelOutputName.Font      = [System.Drawing.Font]::new("Verdana", 12)
 #Couleur du label
-$LabelOutputName.ForeColor = "41, 88, 122"
+$LabelOutputName.ForeColor = "243, 244, 247"
 ##########################
 #   Label Input format   #
 ##########################
@@ -188,7 +188,7 @@ $LabelFormatInput.Text      = "Format d'entrée"
 #Police et taille du text du label
 $LabelFormatInput.Font      = [System.Drawing.Font]::new("Verdana", 12)
 #Couleur du label
-$LabelFormatInput.ForeColor = "41, 88, 122"
+$LabelFormatInput.ForeColor = "243, 244, 247"
 ##########################
 #   Label Output format  #
 ##########################
@@ -203,7 +203,7 @@ $LabelFormatOutput.Text     = "Format de sortie"
 #Police et taille du label
 $LabelFormatOutput.Font      = [System.Drawing.Font]::new("Verdana", 12)
 #Couleur du text
-$LabelFormatOutput.ForeColor= "41, 88, 122"
+$LabelFormatOutput.ForeColor= "243, 244, 247"
 ##########################
 #    Label Info Input    #
 ##########################
@@ -216,7 +216,7 @@ $LabelInfo.Size             = New-Object System.Drawing.Size(192,20)
 #Text du label
 $LabelInfo.Text             = "Chemin d'entrée non spécifié"
 #Couleur du text
-$LabelInfo.ForeColor        = "41, 88, 122"
+$LabelInfo.ForeColor        = "243, 244, 247"
 #Plice et taille du label
 $LabelInfo.Font      = "Bahnschrift, 10"
 ##########################
@@ -231,7 +231,7 @@ $LabelInfo2.Size            = New-Object System.Drawing.Size(193,20)
 #Text du label
 $LabelInfo2.Text            = "Chemin de sortie non spécifié"
 #Couleur du text
-$LabelInfo2.ForeColor       = "41, 88, 122"
+$LabelInfo2.ForeColor       = "243, 244, 247"
 #Police et taille du label
 $LabelInfo2.Font      = "Bahnschrift, 10"
 ##########################
@@ -270,7 +270,7 @@ $RadioButtonDefaultDelimiter.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Activer par défault
 $RadioButtonDefaultDelimiter.Checked = $true
 #Couleur du radio button
-$RadioButtonDefaultDelimiter.ForeColor       = "0, 0, 0"
+$RadioButtonDefaultDelimiter.ForeColor       = "243, 244, 247"
 # Event Click
 $RadioButtonDefaultDelimiter.Add_Click({ #Quand le button est cliqué
     DefaultDelimiter #Function d'affichage
@@ -291,7 +291,7 @@ $RadioButtonChoiceDelimiter.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Police et taille du text
 $RadioButtonChoiceDelimiter.Font      = "Bahnschrift, 10"
 #Couleur du text
-$RadioButtonChoiceDelimiter.ForeColor= "0, 0, 0"
+$RadioButtonChoiceDelimiter.ForeColor= "243, 244, 247"
 # Event Click
 $RadioButtonChoiceDelimiter.Add_Click({ #Quand le button cliqué
         ChoiceDelimiter #Function d'affichage
@@ -316,7 +316,7 @@ $RadioButtonUTF8.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Activer par défault
 $RadioButtonUTF8.Checked = $true
 #Couleur du radio button
-$RadioButtonUTF8.ForeColor       = "0, 0, 0"
+$RadioButtonUTF8.ForeColor       = "243, 244, 247"
 # Event Click
 $RadioButtonUTF8.Add_Click({ #Quand le button est cliqué
     #$EncodingType = 'utf8'
@@ -340,7 +340,7 @@ $RadioButtonUTF8BOM.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Police et taille du text
 $RadioButtonUTF8BOM.Font      = "Bahnschrift, 10"
 #Couleur du text
-$RadioButtonUTF8BOM.ForeColor= "0, 0, 0"
+$RadioButtonUTF8BOM.ForeColor= "243, 244, 247"
 # Event Click
 $RadioButtonUTF8BOM.Add_Click({ #Quand le button cliqué
     #$EncodingType = 'utf8BOM'
@@ -362,7 +362,7 @@ $RadioButtonANSI.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Police et taille du text
 $RadioButtonANSI.Font      = "Bahnschrift, 10"
 #Couleur du text
-$RadioButtonANSI.ForeColor= "0, 0, 0"
+$RadioButtonANSI.ForeColor= "243, 244, 247"
 # Event Click
 $RadioButtonANSI.Add_Click({ #Quand le button cliqué
     #$EncodingType = 'ANSI'
@@ -412,7 +412,7 @@ $ButtonLocation.BackColor = "153, 152, 246"
 #Deisgn du button
 $ButtonLocation.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Couleur du text
-$ButtonLocation.ForeColor = "0, 0, 0"
+$ButtonLocation.ForeColor = "243, 244, 247"
 #Création du dialogue pour la séléction du chemin
 $FilePath                   = New-Object System.Windows.Forms.OpenFileDialog
 # Event click
@@ -440,7 +440,7 @@ $ButtonLocation2.Font      = "Bahnschrift, 10"
 #Couleur
 $ButtonLocation2.BackColor = "153, 152, 246"
 #Couleur du text
-$ButtonLocation2.ForeColor = "0, 0, 0"
+$ButtonLocation2.ForeColor = "243, 244, 247"
 #Design
 $ButtonLocation2.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Création du dialogue pour la séléction du chemin
@@ -486,7 +486,7 @@ $OKButton.BackColor = "153, 152, 246"
 #Design
 $OKButton.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 #Couleur du text
-$OKButton.ForeColor = "0, 0, 0"
+$OKButton.ForeColor = "243, 244, 247"
 ### Event click ###
 $OKButton.Add_Click({
 ############################
