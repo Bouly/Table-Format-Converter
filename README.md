@@ -1,8 +1,3 @@
-# Table-Format-Converter
-## What's this ?
-A small PowerShell script to convert table files to different format
-## How to use it ?
-Just download and extract the folder and run the Powershell script, you can also use the files in .\ConverterBaseFormat to test the script
 ## Format
 + <strong>CSV</strong> to <strong>JSON</strong>, <strong>XML</strong> and <strong>XLSX</strong>
 + <strong>JSON</strong> to <strong>CSV</strong>, <strong>XML</strong> and <strong>XLSX</strong>
