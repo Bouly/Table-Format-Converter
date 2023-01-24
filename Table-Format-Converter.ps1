@@ -776,5 +776,3 @@ $ComboboxTypeOutput
 $DelimiterAlert.Visible = $false
 ModuleMissing_Invisible
 $main_form.ShowDialog()
-
-# Super projet AHMED
